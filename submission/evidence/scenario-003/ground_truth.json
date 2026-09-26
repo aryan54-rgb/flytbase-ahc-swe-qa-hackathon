@@ -1,0 +1,1152 @@
+[
+  {
+    "label": "preflight",
+    "t": 3,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15560
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 16,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "start",
+    "t": 91,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15560
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 0,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "layout_settle",
+    "t": 2170,
+    "extra": {
+      "stable": true,
+      "elapsedMs": 1775
+    }
+  },
+  {
+    "label": "document_overflow",
+    "t": 2235,
+    "extra": {
+      "viewportWidth": 375,
+      "viewportHeight": 667,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "bodyScrollWidth": 375,
+      "overflowX": 0,
+      "offenders": []
+    }
+  },
+  {
+    "label": "critical_geometry",
+    "t": 2576,
+    "extra": [
+      {
+        "label": "socket badge",
+        "selector": "[data-testid=socket-status]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 144.65625,
+          "y": 12.796875,
+          "width": 111.90625,
+          "height": 21.390625,
+          "right": 256.5625,
+          "bottom": 34.1875
+        },
+        "visibleRect": {
+          "x": 144.65625,
+          "y": 12.796875,
+          "width": 111.90625,
+          "height": 21.390625,
+          "right": 256.5625,
+          "bottom": 34.1875
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:socket-status",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "control panel link",
+        "selector": "role=link[name=/control panel/i]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 268.5625,
+          "y": 15.09375,
+          "width": 90.4375,
+          "height": 16.796875,
+          "right": 359,
+          "bottom": 31.890625
+        },
+        "visibleRect": {
+          "x": 268.5625,
+          "y": 15.09375,
+          "width": 90.4375,
+          "height": 16.796875,
+          "right": 359,
+          "bottom": 31.890625
+        },
+        "clippedX": 0,
+        "hitTarget": "a.dashboard-link",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "device row drone-1",
+        "selector": "[data-testid=device-row-drone-1]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 21,
+          "y": 92.390625,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 142.375
+        },
+        "visibleRect": {
+          "x": 21,
+          "y": 92.390625,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 142.375
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:device-row-drone-1",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "device row drone-2",
+        "selector": "[data-testid=device-row-drone-2]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 21,
+          "y": 146.375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 196.359375
+        },
+        "visibleRect": {
+          "x": 21,
+          "y": 146.375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 196.359375
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:device-row-drone-2",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "device row drone-3",
+        "selector": "[data-testid=device-row-drone-3]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 21,
+          "y": 200.359375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 250.34375
+        },
+        "visibleRect": {
+          "x": 21,
+          "y": 200.359375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 250.34375
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:device-row-drone-3",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "device row drone-4",
+        "selector": "[data-testid=device-row-drone-4]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 21,
+          "y": 254.34375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 304.328125
+        },
+        "visibleRect": {
+          "x": 21,
+          "y": 254.34375,
+          "width": 333,
+          "height": 13.65625,
+          "right": 354,
+          "bottom": 268
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:device-row-drone-4",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "flight status pill",
+        "selector": "[data-testid=status-flight]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 295.6875,
+          "y": 336.328125,
+          "width": 58.3125,
+          "height": 19.390625,
+          "right": 354,
+          "bottom": 355.71875
+        },
+        "visibleRect": null,
+        "clippedX": 0,
+        "hitTarget": null,
+        "hitRect": null,
+        "receivesPointer": false,
+        "coverage": null
+      },
+      {
+        "label": "telemetry battery",
+        "selector": "[data-testid=telemetry-battery]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 29,
+          "y": 385.109375,
+          "width": 146.5,
+          "height": 21,
+          "right": 175.5,
+          "bottom": 406.109375
+        },
+        "visibleRect": null,
+        "clippedX": 0,
+        "hitTarget": null,
+        "hitRect": null,
+        "receivesPointer": false,
+        "coverage": null
+      },
+      {
+        "label": "telemetry altitude",
+        "selector": "[data-testid=telemetry-alt-rlt]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 199.5,
+          "y": 385.109375,
+          "width": 146.5,
+          "height": 21,
+          "right": 346,
+          "bottom": 406.109375
+        },
+        "visibleRect": null,
+        "clippedX": 0,
+        "hitTarget": null,
+        "hitRect": null,
+        "receivesPointer": false,
+        "coverage": null
+      },
+      {
+        "label": "telemetry h-speed",
+        "selector": "[data-testid=telemetry-hspeed]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 29,
+          "y": 493.890625,
+          "width": 146.5,
+          "height": 21,
+          "right": 175.5,
+          "bottom": 514.890625
+        },
+        "visibleRect": null,
+        "clippedX": 0,
+        "hitTarget": null,
+        "hitRect": null,
+        "receivesPointer": false,
+        "coverage": null
+      },
+      {
+        "label": "telemetry heading",
+        "selector": "[data-testid=telemetry-heading]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 29,
+          "y": 548.28125,
+          "width": 146.5,
+          "height": 21,
+          "right": 175.5,
+          "bottom": 569.28125
+        },
+        "visibleRect": null,
+        "clippedX": 0,
+        "hitTarget": null,
+        "hitRect": null,
+        "receivesPointer": false,
+        "coverage": null
+      },
+      {
+        "label": "video state",
+        "selector": "[data-testid=video-state]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 181.671875,
+          "y": 518.828125,
+          "width": 19.328125,
+          "height": 16.796875,
+          "right": 201,
+          "bottom": 535.625
+        },
+        "visibleRect": {
+          "x": 181.671875,
+          "y": 518.828125,
+          "width": 19.328125,
+          "height": 16.796875,
+          "right": 201,
+          "bottom": 535.625
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:video-state",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "map 2D button",
+        "selector": "[data-testid=map-view-2d]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 143.5,
+          "y": 625.203125,
+          "width": 44,
+          "height": 28.796875,
+          "right": 187.5,
+          "bottom": 654
+        },
+        "visibleRect": {
+          "x": 143.5,
+          "y": 625.203125,
+          "width": 44,
+          "height": 28.796875,
+          "right": 187.5,
+          "bottom": 654
+        },
+        "clippedX": 0,
+        "hitTarget": "region:video-tile",
+        "hitRect": {
+          "x": 12,
+          "y": 511.828125,
+          "width": 200,
+          "height": 143.171875,
+          "right": 212,
+          "bottom": 655
+        },
+        "receivesPointer": false,
+        "coverage": {
+          "points": 9,
+          "reachable": 0,
+          "fraction": 0,
+          "coveredBy": [
+            "region:video-tile"
+          ]
+        }
+      },
+      {
+        "label": "map 3D button",
+        "selector": "[data-testid=map-view-3d]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 187.5,
+          "y": 625.203125,
+          "width": 44,
+          "height": 28.796875,
+          "right": 231.5,
+          "bottom": 654
+        },
+        "visibleRect": {
+          "x": 187.5,
+          "y": 625.203125,
+          "width": 44,
+          "height": 28.796875,
+          "right": 231.5,
+          "bottom": 654
+        },
+        "clippedX": 0,
+        "hitTarget": "region:video-tile",
+        "hitRect": {
+          "x": 12,
+          "y": 511.828125,
+          "width": 200,
+          "height": 143.171875,
+          "right": 212,
+          "bottom": 655
+        },
+        "receivesPointer": false,
+        "coverage": {
+          "points": 9,
+          "reachable": 3,
+          "fraction": 0.33,
+          "coveredBy": [
+            "region:video-tile"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "label": "interactive_geometry",
+    "t": 6440,
+    "extra": [
+      {
+        "label": "control panel link",
+        "selector": "role=link[name=/control panel/i]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 268.5625,
+          "y": 15.09375,
+          "width": 90.4375,
+          "height": 16.796875,
+          "right": 359,
+          "bottom": 31.890625
+        },
+        "visibleRect": {
+          "x": 268.5625,
+          "y": 15.09375,
+          "width": 90.4375,
+          "height": 16.796875,
+          "right": 359,
+          "bottom": 31.890625
+        },
+        "clippedX": 0,
+        "hitTarget": "a.dashboard-link",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "device row drone-1",
+        "selector": "[data-testid=device-row-drone-1]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 21,
+          "y": 92.390625,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 142.375
+        },
+        "visibleRect": {
+          "x": 21,
+          "y": 92.390625,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 142.375
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:device-row-drone-1",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "device row drone-2",
+        "selector": "[data-testid=device-row-drone-2]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 21,
+          "y": 146.375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 196.359375
+        },
+        "visibleRect": {
+          "x": 21,
+          "y": 146.375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 196.359375
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:device-row-drone-2",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "device row drone-3",
+        "selector": "[data-testid=device-row-drone-3]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 21,
+          "y": 200.359375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 250.34375
+        },
+        "visibleRect": {
+          "x": 21,
+          "y": 200.359375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 250.34375
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:device-row-drone-3",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "device row drone-4",
+        "selector": "[data-testid=device-row-drone-4]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 21,
+          "y": 217.34375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 267.328125
+        },
+        "visibleRect": {
+          "x": 21,
+          "y": 217.34375,
+          "width": 333,
+          "height": 49.984375,
+          "right": 354,
+          "bottom": 267.328125
+        },
+        "clippedX": 0,
+        "hitTarget": "testid:device-row-drone-4",
+        "hitRect": null,
+        "receivesPointer": true,
+        "coverage": {
+          "points": 9,
+          "reachable": 9,
+          "fraction": 1,
+          "coveredBy": []
+        }
+      },
+      {
+        "label": "map 2D button",
+        "selector": "[data-testid=map-view-2d]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 143.5,
+          "y": 625.203125,
+          "width": 44,
+          "height": 28.796875,
+          "right": 187.5,
+          "bottom": 654
+        },
+        "visibleRect": {
+          "x": 143.5,
+          "y": 625.203125,
+          "width": 44,
+          "height": 28.796875,
+          "right": 187.5,
+          "bottom": 654
+        },
+        "clippedX": 0,
+        "hitTarget": "region:video-tile",
+        "hitRect": {
+          "x": 12,
+          "y": 511.828125,
+          "width": 200,
+          "height": 143.171875,
+          "right": 212,
+          "bottom": 655
+        },
+        "receivesPointer": false,
+        "coverage": {
+          "points": 9,
+          "reachable": 0,
+          "fraction": 0,
+          "coveredBy": [
+            "region:video-tile"
+          ]
+        }
+      },
+      {
+        "label": "map 3D button",
+        "selector": "[data-testid=map-view-3d]",
+        "found": true,
+        "visible": true,
+        "rect": {
+          "x": 187.5,
+          "y": 625.203125,
+          "width": 44,
+          "height": 28.796875,
+          "right": 231.5,
+          "bottom": 654
+        },
+        "visibleRect": {
+          "x": 187.5,
+          "y": 625.203125,
+          "width": 44,
+          "height": 28.796875,
+          "right": 231.5,
+          "bottom": 654
+        },
+        "clippedX": 0,
+        "hitTarget": "region:video-tile",
+        "hitRect": {
+          "x": 12,
+          "y": 511.828125,
+          "width": 200,
+          "height": 143.171875,
+          "right": 212,
+          "bottom": 655
+        },
+        "receivesPointer": false,
+        "coverage": {
+          "points": 9,
+          "reachable": 3,
+          "fraction": 0.33,
+          "coveredBy": [
+            "region:video-tile"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "label": "widget_geometry",
+    "t": 6570,
+    "extra": [
+      {
+        "target": "role:banner",
+        "label": "header",
+        "selector": "role=banner",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 48,
+          "right": 375,
+          "bottom": 48
+        },
+        "visible_rect": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 48,
+          "right": 375,
+          "bottom": 48
+        },
+        "clipped_x": 0
+      },
+      {
+        "target": "region:device-telemetry-panel",
+        "label": "device/telemetry panel",
+        "selector": "aside",
+        "rect": {
+          "x": 0,
+          "y": 48,
+          "width": 375,
+          "height": 220,
+          "right": 375,
+          "bottom": 268
+        },
+        "visible_rect": {
+          "x": 0,
+          "y": 48,
+          "width": 375,
+          "height": 220,
+          "right": 375,
+          "bottom": 268
+        },
+        "clipped_x": 0
+      },
+      {
+        "target": "region:video-tile",
+        "label": "video tile",
+        "selector": ":has(> [data-testid=\"video-player\"])",
+        "rect": {
+          "x": 12,
+          "y": 512,
+          "width": 200,
+          "height": 143,
+          "right": 212,
+          "bottom": 655
+        },
+        "visible_rect": {
+          "x": 12,
+          "y": 512,
+          "width": 200,
+          "height": 143,
+          "right": 212,
+          "bottom": 655
+        },
+        "clipped_x": 0
+      },
+      {
+        "target": "testid:map-view-toggle",
+        "label": "map view toggle",
+        "selector": "[data-testid=map-view-toggle]",
+        "rect": {
+          "x": 143,
+          "y": 624,
+          "width": 90,
+          "height": 31,
+          "right": 233,
+          "bottom": 655
+        },
+        "visible_rect": {
+          "x": 143,
+          "y": 624,
+          "width": 90,
+          "height": 31,
+          "right": 233,
+          "bottom": 655
+        },
+        "clipped_x": 0
+      },
+      {
+        "target": "region:brand",
+        "label": "brand",
+        "selector": "header > :first-child",
+        "rect": {
+          "x": 16,
+          "y": 14,
+          "width": 115,
+          "height": 20,
+          "right": 131,
+          "bottom": 33
+        },
+        "visible_rect": {
+          "x": 16,
+          "y": 14,
+          "width": 115,
+          "height": 20,
+          "right": 131,
+          "bottom": 33
+        },
+        "clipped_x": 0
+      },
+      {
+        "target": "testid:socket-status",
+        "label": "socket badge",
+        "selector": "[data-testid=socket-status]",
+        "rect": {
+          "x": 145,
+          "y": 13,
+          "width": 112,
+          "height": 21,
+          "right": 257,
+          "bottom": 34
+        },
+        "visible_rect": {
+          "x": 145,
+          "y": 13,
+          "width": 112,
+          "height": 21,
+          "right": 257,
+          "bottom": 34
+        },
+        "clipped_x": 0
+      },
+      {
+        "target": "link:control-panel",
+        "label": "control panel link",
+        "selector": "role=link[name=/control panel/i]",
+        "rect": {
+          "x": 269,
+          "y": 15,
+          "width": 90,
+          "height": 17,
+          "right": 359,
+          "bottom": 32
+        },
+        "visible_rect": {
+          "x": 269,
+          "y": 15,
+          "width": 90,
+          "height": 17,
+          "right": 359,
+          "bottom": 32
+        },
+        "clipped_x": 0
+      }
+    ]
+  },
+  {
+    "label": "end",
+    "t": 6861,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15567
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 15,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  }
+]

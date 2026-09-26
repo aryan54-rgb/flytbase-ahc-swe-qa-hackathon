@@ -1,0 +1,622 @@
+{
+  "schema": "cockpit-qa/result@2",
+  "scenario": {
+    "id": "scenario-002",
+    "title": "Device Selection Synchronization",
+    "user_goal": "When I click another drone, the whole cockpit (list, telemetry, video) switches focus to it.",
+    "starting_state": {
+      "description": "Simulator reset (all drones standby at their docks); cockpit loaded at / with the default first drone selected.",
+      "path": "/",
+      "simulator": "reset",
+      "waitForDevices": true
+    },
+    "steps": [
+      "Initial focus is coherent",
+      "Click a different drone row",
+      "Click the original drone again (selection is repeatable)"
+    ],
+    "expected_behavior": [
+      "The clicked row becomes the only selected row, visibly distinct; the previously selected row is deselected.",
+      "The telemetry header and the video header both name the clicked drone.",
+      "Telemetry values are the clicked drone's (heading matches its ground-truth heading).",
+      "Selection works repeatedly (switching back restores the original focus)."
+    ],
+    "invariant": "selectedRow.id == telemetryHeader.device == videoHeader.device == device whose ground-truth heading/status the telemetry shows.",
+    "evidence_requirements": [
+      "recording",
+      "screenshot_on_failure",
+      "dom_on_failure",
+      "console",
+      "ground_truth",
+      "result"
+    ],
+    "tags": [
+      "level-1",
+      "interaction",
+      "ground-truth"
+    ]
+  },
+  "status": "PASS",
+  "status_reason": "all invariants held",
+  "findings": [],
+  "incident_count": 0,
+  "baseline_comparison": {
+    "baseline_id": "2026-09-26T09-39-56-141Z",
+    "known_stable": [],
+    "known_intermittent": [],
+    "new": [],
+    "masked": [],
+    "absent_intermittent": []
+  },
+  "started_at": "2026-09-26T10:12:56.692Z",
+  "finished_at": "2026-09-26T10:13:02.027Z",
+  "duration_ms": 5335,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "versions": {
+    "harness": {
+      "version": "0.1.0",
+      "source_hash": "d5a784687a20"
+    },
+    "app": {
+      "git_commit": "16db625db9c954d709acf5b25d4c24bb8c8e6eb1",
+      "git_branch": "main",
+      "product_dirty": true,
+      "dirty_files": [
+        "submission/"
+      ]
+    }
+  },
+  "environment": {
+    "cockpitUrl": "http://localhost:4010",
+    "apiUrl": "http://localhost:4000",
+    "browser": "chromium 153.0.8010.12",
+    "mutation": null
+  },
+  "warnings": [],
+  "steps": [
+    {
+      "index": 1,
+      "name": "Starting state: cockpit renders the device list",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "app.device_list_rendered",
+          "target": "region:device-list",
+          "type": "blank",
+          "name": "app.device_list_rendered [region:device-list]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "message": "no device rows within 30000 ms while API reports 4 drones",
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    },
+    {
+      "index": 2,
+      "name": "Initial focus is coherent",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "selection.single_selected_row",
+          "target": "region:device-list",
+          "type": "mismatch",
+          "name": "selection.single_selected_row [region:device-list]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": 1,
+          "actual": 1,
+          "state": ""
+        },
+        {
+          "id": "selection.clicked_row_selected",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.clicked_row_selected [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "drone-1",
+          "actual": [
+            "drone-1"
+          ],
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_header_follows",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.telemetry_header_follows [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 1",
+          "actual": "Drone 1",
+          "state": ""
+        },
+        {
+          "id": "selection.video_header_follows",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.video_header_follows [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 1",
+          "actual": "Drone 1",
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_status_is_selected_drone",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.telemetry_status_is_selected_drone [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "standby",
+          "actual": "standby",
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_data_is_selected_drone",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.telemetry_data_is_selected_drone [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "47 ± 1",
+          "actual": 47,
+          "message": "heading 47° shown, drone-1 heading is 47°",
+          "state": ""
+        },
+        {
+          "id": "selection.visually_distinct",
+          "target": "device:drone-1",
+          "type": "not_distinct",
+          "name": "selection.visually_distinct [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "selected row styled differently from unselected rows",
+          "actual": "same computed style as ",
+          "state": ""
+        }
+      ],
+      "duration_ms": 867
+    },
+    {
+      "index": 3,
+      "name": "Click a different drone row",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "interaction.action_executed",
+          "target": "device:drone-4",
+          "type": "not_actionable",
+          "name": "interaction.action_executed [device:drone-4]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "selection.single_selected_row",
+          "target": "region:device-list",
+          "type": "mismatch",
+          "name": "selection.single_selected_row [region:device-list]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": 1,
+          "actual": 1,
+          "state": ""
+        },
+        {
+          "id": "selection.clicked_row_selected",
+          "target": "device:drone-4",
+          "type": "mismatch",
+          "name": "selection.clicked_row_selected [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "drone-4",
+          "actual": [
+            "drone-4"
+          ],
+          "state": ""
+        },
+        {
+          "id": "selection.previous_row_deselected",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.previous_row_deselected [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "not drone-1",
+          "actual": [
+            "drone-4"
+          ],
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_header_follows",
+          "target": "device:drone-4",
+          "type": "mismatch",
+          "name": "selection.telemetry_header_follows [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 4",
+          "actual": "Drone 4",
+          "state": ""
+        },
+        {
+          "id": "selection.video_header_follows",
+          "target": "device:drone-4",
+          "type": "mismatch",
+          "name": "selection.video_header_follows [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 4",
+          "actual": "Drone 4",
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_status_is_selected_drone",
+          "target": "device:drone-4",
+          "type": "mismatch",
+          "name": "selection.telemetry_status_is_selected_drone [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "standby",
+          "actual": "standby",
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_data_is_selected_drone",
+          "target": "device:drone-4",
+          "type": "mismatch",
+          "name": "selection.telemetry_data_is_selected_drone [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "318 ± 1",
+          "actual": 318,
+          "message": "heading 318° shown, drone-4 heading is 318°",
+          "state": ""
+        },
+        {
+          "id": "selection.visually_distinct",
+          "target": "device:drone-4",
+          "type": "not_distinct",
+          "name": "selection.visually_distinct [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "selected row styled differently from unselected rows",
+          "actual": "same computed style as ",
+          "state": ""
+        }
+      ],
+      "duration_ms": 1175,
+      "interaction_stage": "POSTCONDITION_SATISFIED"
+    },
+    {
+      "index": 4,
+      "name": "Click the original drone again (selection is repeatable)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "interaction.action_executed",
+          "target": "device:drone-1",
+          "type": "not_actionable",
+          "name": "interaction.action_executed [device:drone-1]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "selection.single_selected_row",
+          "target": "region:device-list",
+          "type": "mismatch",
+          "name": "selection.single_selected_row [region:device-list]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": 1,
+          "actual": 1,
+          "state": ""
+        },
+        {
+          "id": "selection.clicked_row_selected",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.clicked_row_selected [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "drone-1",
+          "actual": [
+            "drone-1"
+          ],
+          "state": ""
+        },
+        {
+          "id": "selection.previous_row_deselected",
+          "target": "device:drone-4",
+          "type": "mismatch",
+          "name": "selection.previous_row_deselected [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "not drone-4",
+          "actual": [
+            "drone-1"
+          ],
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_header_follows",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.telemetry_header_follows [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 1",
+          "actual": "Drone 1",
+          "state": ""
+        },
+        {
+          "id": "selection.video_header_follows",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.video_header_follows [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 1",
+          "actual": "Drone 1",
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_status_is_selected_drone",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.telemetry_status_is_selected_drone [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "standby",
+          "actual": "standby",
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_data_is_selected_drone",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "selection.telemetry_data_is_selected_drone [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "47 ± 1",
+          "actual": 47,
+          "message": "heading 47° shown, drone-1 heading is 47°",
+          "state": ""
+        },
+        {
+          "id": "selection.visually_distinct",
+          "target": "device:drone-1",
+          "type": "not_distinct",
+          "name": "selection.visually_distinct [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "selected row styled differently from unselected rows",
+          "actual": "same computed style as ",
+          "state": ""
+        }
+      ],
+      "duration_ms": 1233,
+      "interaction_stage": "POSTCONDITION_SATISFIED"
+    },
+    {
+      "index": 5,
+      "name": "Runtime health",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "runtime.no_uncaught_errors",
+          "target": "page",
+          "type": "uncaught_error",
+          "name": "runtime.no_uncaught_errors [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no uncaught exceptions",
+          "actual": [],
+          "state": ""
+        },
+        {
+          "id": "runtime.no_unexpected_dialogs",
+          "target": "page",
+          "type": "unexpected_dialog",
+          "name": "runtime.no_unexpected_dialogs [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no dialogs",
+          "actual": [],
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    }
+  ],
+  "runtime": {
+    "page_errors": 0,
+    "console_errors": 0,
+    "dialogs": 0,
+    "failed_requests": 0
+  },
+  "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\evidence\\scenario-002",
+  "evidence": {
+    "final": "final.png",
+    "recording": "recording.webm",
+    "console": "console.json",
+    "ground_truth": "ground_truth.json",
+    "result": "result.json"
+  },
+  "evidence_integrity": {
+    "required": [
+      "console.json",
+      "ground_truth.json",
+      "result.json"
+    ],
+    "missing": []
+  },
+  "healing": {
+    "summary": {
+      "total_actions": 2,
+      "deterministic": 2,
+      "healed_actions": 0,
+      "memory_hits": 0,
+      "memory_stale": 0,
+      "local_recoveries": 0,
+      "llm_calls": 0,
+      "llm_successes": 0,
+      "llm_latency_ms_total": 0,
+      "llm_tokens_total": 0,
+      "unresolved": 0,
+      "rejected": 0,
+      "target_absent": 0,
+      "healing_failures": 0,
+      "status": "NOT_NEEDED"
+    },
+    "provider": "none",
+    "model": null,
+    "actions": [
+      {
+        "scenario_id": "scenario-002",
+        "step": "Click a different drone row",
+        "step_id": "select-drone-4",
+        "intent": "Select Drone 4 in the device list",
+        "original_target": "device:drone-4",
+        "original_selector": "[data-testid=\"device-row-drone-4\"]",
+        "mode": "action",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 4,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "satisfied",
+        "clicks_dispatched": 1,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-002",
+        "step": "Click the original drone again (selection is repeatable)",
+        "step_id": "select-drone-1",
+        "intent": "Select Drone 1 in the device list",
+        "original_target": "device:drone-1",
+        "original_selector": "[data-testid=\"device-row-drone-1\"]",
+        "mode": "action",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 754,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "satisfied",
+        "clicks_dispatched": 1,
+        "reason": "known selector resolved"
+      }
+    ]
+  }
+}

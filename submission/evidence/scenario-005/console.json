@@ -1,0 +1,317 @@
+[
+  {
+    "t": 210,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 219,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 280,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 340,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 340,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 1172,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 1190,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 1200,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 1206,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 1206,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 1480,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 1501,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 1508,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 1516,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 1516,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 1723,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 1734,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 1753,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 1760,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 1760,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 1969,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 1980,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 1989,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 1995,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 1995,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 2189,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 2202,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 2218,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 2230,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 2230,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 2466,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 2488,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 2496,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 2502,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 2502,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 2680,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 2694,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 2701,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 2707,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 2707,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 2916,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 2926,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 2945,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 2959,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 2959,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  }
+]

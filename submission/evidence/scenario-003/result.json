@@ -1,0 +1,2105 @@
+{
+  "schema": "cockpit-qa/result@2",
+  "scenario": {
+    "id": "scenario-003",
+    "title": "375px Responsive Integrity",
+    "user_goal": "On a 375×667 phone viewport I can still read telemetry, pick a drone and use the map controls.",
+    "starting_state": {
+      "description": "Simulator reset; cockpit loaded at / in a 375×667 viewport.",
+      "path": "/",
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "simulator": "reset",
+      "waitForDevices": true
+    },
+    "steps": [
+      "No horizontal document overflow",
+      "Critical elements are inside the viewport and not clipped horizontally",
+      "Interactive controls are reachable and receive the pointer",
+      "Top-level widgets do not overlap",
+      "Selecting a drone still updates telemetry at 375px"
+    ],
+    "expected_behavior": [
+      "The document does not scroll horizontally.",
+      "Critical elements (device rows, telemetry, status, video state, map toggle, header controls) lie within the viewport horizontally and are not clipped by ancestors.",
+      "Interactive controls can be scrolled into view and a click at their centre reaches them (not covered by another element).",
+      "Top-level widgets (header, device/telemetry panel, video tile, map view toggle) do not overlap each other.",
+      "Selecting a drone still updates telemetry at this width."
+    ],
+    "invariant": "For every critical element e: 0 <= e.left && e.right <= 375 && clippedX(e) == 0; for interactive e: hitTest(center(e)) ∈ e; pairwise overlap of top-level widgets == 0.",
+    "evidence_requirements": [
+      "recording",
+      "screenshot_on_failure",
+      "dom_on_failure",
+      "console",
+      "ground_truth",
+      "result"
+    ],
+    "tags": [
+      "level-1",
+      "responsive",
+      "layout"
+    ],
+    "independent_steps": true
+  },
+  "status": "DEFECT_FOUND",
+  "status_reason": "Interactive controls are reachable and receive the pointer: layout.pointer_reaches [testid:map-view-2d]: centre of map 2D button is covered by region:video-tile; 100% of sampled points covered; actionability probe: NOT_ACTIONABLE (intercepted)",
+  "findings": [
+    {
+      "fingerprint": "2b098d9eeeff",
+      "signature": "scenario-003 | layout.pointer_reaches | testid:map-view-2d | covered | region:video-tile",
+      "scenario_id": "scenario-003",
+      "check_id": "layout.pointer_reaches",
+      "target": "testid:map-view-2d",
+      "failure_type": "covered",
+      "state": "region:video-tile",
+      "step": "Interactive controls are reachable and receive the pointer",
+      "phase": "verify",
+      "summary": "layout.pointer_reaches [testid:map-view-2d]: centre of map 2D button is covered by region:video-tile; 100% of sampled points covered; actionability probe: NOT_ACTIONABLE (intercepted)",
+      "expected": "click at centre lands on [data-testid=map-view-2d]",
+      "actual": "lands on region:video-tile",
+      "observed": {
+        "viewport": {
+          "width": 375,
+          "height": 667
+        },
+        "element": {
+          "label": "map 2D button",
+          "selector": "[data-testid=map-view-2d]",
+          "rect": {
+            "x": 144,
+            "y": 625,
+            "width": 44,
+            "height": 29,
+            "right": 188,
+            "bottom": 654
+          },
+          "visible_rect": {
+            "x": 144,
+            "y": 625,
+            "width": 44,
+            "height": 29,
+            "right": 188,
+            "bottom": 654
+          },
+          "clipped_x": 0
+        },
+        "covered_by": "region:video-tile",
+        "covered_by_rect": {
+          "x": 12,
+          "y": 512,
+          "width": 200,
+          "height": 143,
+          "right": 212,
+          "bottom": 655
+        },
+        "coverage": {
+          "points": 9,
+          "reachable": 0,
+          "fraction": 0,
+          "coveredBy": [
+            "region:video-tile"
+          ]
+        },
+        "actionability": {
+          "method": "playwright trial click (actionability checks only; nothing is clicked)",
+          "stage": "NOT_ACTIONABLE",
+          "reason": "intercepted",
+          "detail": "- <video autoplay=\"\" playsinline=\"\" data-state=\"playing\" class=\"video-player\" data-testid=\"video-player\"></video> from <div class=\"video-tile\">…</div> subtree intercepts pointer events"
+        }
+      },
+      "occurrences": 1,
+      "incident": "1e5be47648b9",
+      "evidence": {
+        "dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\evidence\\scenario-003",
+        "files": {
+          "failure": "failure.png",
+          "dom": "dom.html",
+          "failure_annotated": "failure-annotated.png",
+          "recording": "recording.webm",
+          "console": "console.json",
+          "ground_truth": "ground_truth.json",
+          "result": "result.json"
+        }
+      },
+      "boxes": [
+        {
+          "label": "map 2D button",
+          "rect": {
+            "x": 143.5,
+            "y": 625.203125,
+            "width": 44,
+            "height": 28.796875
+          }
+        },
+        {
+          "label": "covered by region:video-tile",
+          "rect": {
+            "x": 12,
+            "y": 511.828125,
+            "width": 200,
+            "height": 143.171875
+          }
+        }
+      ],
+      "baseline_state": "STABLE_BASELINE"
+    },
+    {
+      "fingerprint": "1e5be47648b9",
+      "signature": "scenario-003 | layout.pointer_reaches | testid:map-view-3d | covered | region:video-tile",
+      "scenario_id": "scenario-003",
+      "check_id": "layout.pointer_reaches",
+      "target": "testid:map-view-3d",
+      "failure_type": "covered",
+      "state": "region:video-tile",
+      "step": "Interactive controls are reachable and receive the pointer",
+      "phase": "verify",
+      "summary": "layout.pointer_reaches [testid:map-view-3d]: centre of map 3D button is covered by region:video-tile; 67% of sampled points covered; actionability probe: NOT_ACTIONABLE (intercepted)",
+      "expected": "click at centre lands on [data-testid=map-view-3d]",
+      "actual": "lands on region:video-tile",
+      "observed": {
+        "viewport": {
+          "width": 375,
+          "height": 667
+        },
+        "element": {
+          "label": "map 3D button",
+          "selector": "[data-testid=map-view-3d]",
+          "rect": {
+            "x": 188,
+            "y": 625,
+            "width": 44,
+            "height": 29,
+            "right": 232,
+            "bottom": 654
+          },
+          "visible_rect": {
+            "x": 188,
+            "y": 625,
+            "width": 44,
+            "height": 29,
+            "right": 232,
+            "bottom": 654
+          },
+          "clipped_x": 0
+        },
+        "covered_by": "region:video-tile",
+        "covered_by_rect": {
+          "x": 12,
+          "y": 512,
+          "width": 200,
+          "height": 143,
+          "right": 212,
+          "bottom": 655
+        },
+        "coverage": {
+          "points": 9,
+          "reachable": 3,
+          "fraction": 0.33,
+          "coveredBy": [
+            "region:video-tile"
+          ]
+        },
+        "actionability": {
+          "method": "playwright trial click (actionability checks only; nothing is clicked)",
+          "stage": "NOT_ACTIONABLE",
+          "reason": "intercepted",
+          "detail": "- <video autoplay=\"\" playsinline=\"\" data-state=\"playing\" class=\"video-player\" data-testid=\"video-player\"></video> from <div class=\"video-tile\">…</div> subtree intercepts pointer events"
+        }
+      },
+      "occurrences": 1,
+      "incident": "1e5be47648b9",
+      "evidence": {
+        "dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\evidence\\scenario-003",
+        "files": {
+          "failure": "failure.png",
+          "dom": "dom.html",
+          "failure_annotated": "failure-annotated.png",
+          "recording": "recording.webm",
+          "console": "console.json",
+          "ground_truth": "ground_truth.json",
+          "result": "result.json"
+        }
+      },
+      "boxes": [
+        {
+          "label": "map 3D button",
+          "rect": {
+            "x": 187.5,
+            "y": 625.203125,
+            "width": 44,
+            "height": 28.796875
+          }
+        },
+        {
+          "label": "covered by region:video-tile",
+          "rect": {
+            "x": 12,
+            "y": 511.828125,
+            "width": 200,
+            "height": 143.171875
+          }
+        }
+      ],
+      "baseline_state": "STABLE_BASELINE"
+    },
+    {
+      "fingerprint": "431994fde8de",
+      "signature": "scenario-003 | layout.no_overlap | pair:region:video-tile|testid:map-view-toggle | overlap | overlap",
+      "scenario_id": "scenario-003",
+      "check_id": "layout.no_overlap",
+      "target": "pair:region:video-tile|testid:map-view-toggle",
+      "failure_type": "overlap",
+      "state": "overlap",
+      "step": "Top-level widgets do not overlap",
+      "phase": "verify",
+      "summary": "layout.no_overlap [pair:region:video-tile|testid:map-view-toggle]: video tile overlaps map view toggle by 2140 px² (video tile: x=12 right=212 y=512 bottom=655 | map view toggle: x=143 right=233 y=624 bottom=655)",
+      "expected": "0 px² overlap",
+      "actual": "2140 px² overlap",
+      "observed": {
+        "viewport": {
+          "width": 375,
+          "height": 667
+        },
+        "overlap_px2": 2140,
+        "overlap_rect": {
+          "x": 143,
+          "y": 624,
+          "width": 70,
+          "height": 31,
+          "right": 212,
+          "bottom": 655
+        },
+        "a": {
+          "target": "region:video-tile",
+          "label": "video tile",
+          "selector": ":has(> [data-testid=\"video-player\"])",
+          "rect": {
+            "x": 12,
+            "y": 512,
+            "width": 200,
+            "height": 143,
+            "right": 212,
+            "bottom": 655
+          },
+          "visible_rect": {
+            "x": 12,
+            "y": 512,
+            "width": 200,
+            "height": 143,
+            "right": 212,
+            "bottom": 655
+          },
+          "clipped_x": 0
+        },
+        "b": {
+          "target": "testid:map-view-toggle",
+          "label": "map view toggle",
+          "selector": "[data-testid=map-view-toggle]",
+          "rect": {
+            "x": 143,
+            "y": 624,
+            "width": 90,
+            "height": 31,
+            "right": 233,
+            "bottom": 655
+          },
+          "visible_rect": {
+            "x": 143,
+            "y": 624,
+            "width": 90,
+            "height": 31,
+            "right": 233,
+            "bottom": 655
+          },
+          "clipped_x": 0
+        }
+      },
+      "occurrences": 1,
+      "incident": "1e5be47648b9",
+      "evidence": {
+        "dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\evidence\\scenario-003",
+        "files": {
+          "failure": "failure.png",
+          "dom": "dom.html",
+          "failure_annotated": "failure-annotated.png",
+          "recording": "recording.webm",
+          "console": "console.json",
+          "ground_truth": "ground_truth.json",
+          "result": "result.json"
+        }
+      },
+      "boxes": [
+        {
+          "label": "video tile",
+          "rect": {
+            "x": 12,
+            "y": 511.828125,
+            "width": 200,
+            "height": 143.171875
+          }
+        },
+        {
+          "label": "map view toggle",
+          "rect": {
+            "x": 142.5,
+            "y": 624.203125,
+            "width": 90,
+            "height": 30.796875
+          }
+        }
+      ],
+      "baseline_state": "STABLE_BASELINE"
+    }
+  ],
+  "incident_count": 1,
+  "baseline_comparison": {
+    "baseline_id": "2026-09-26T09-39-56-141Z",
+    "known_stable": [
+      "1e5be47648b9",
+      "2b098d9eeeff",
+      "431994fde8de"
+    ],
+    "known_intermittent": [],
+    "new": [],
+    "masked": [],
+    "absent_intermittent": []
+  },
+  "started_at": "2026-09-26T10:13:04.387Z",
+  "finished_at": "2026-09-26T10:13:11.335Z",
+  "duration_ms": 6948,
+  "viewport": {
+    "width": 375,
+    "height": 667
+  },
+  "versions": {
+    "harness": {
+      "version": "0.1.0",
+      "source_hash": "d5a784687a20"
+    },
+    "app": {
+      "git_commit": "16db625db9c954d709acf5b25d4c24bb8c8e6eb1",
+      "git_branch": "main",
+      "product_dirty": true,
+      "dirty_files": [
+        "submission/"
+      ]
+    }
+  },
+  "environment": {
+    "cockpitUrl": "http://localhost:4010",
+    "apiUrl": "http://localhost:4000",
+    "browser": "chromium 153.0.8010.12",
+    "mutation": null
+  },
+  "warnings": [],
+  "steps": [
+    {
+      "index": 1,
+      "name": "Starting state: cockpit renders the device list",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "app.device_list_rendered",
+          "target": "region:device-list",
+          "type": "blank",
+          "name": "app.device_list_rendered [region:device-list]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "message": "no device rows within 30000 ms while API reports 4 drones",
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    },
+    {
+      "index": 2,
+      "name": "No horizontal document overflow",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "layout.settled",
+          "target": "page",
+          "type": "timeout",
+          "name": "layout.settled [page]",
+          "phase": "action",
+          "passed": true,
+          "severity": "warn",
+          "expected": "layout stops moving",
+          "actual": "still moving after 1775 ms",
+          "state": ""
+        },
+        {
+          "id": "layout.no_horizontal_overflow",
+          "target": "document",
+          "type": "overflow",
+          "name": "layout.no_horizontal_overflow [document]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "scrollWidth <= 375",
+          "actual": 375,
+          "message": "document overflows by 0px; offenders: ",
+          "state": ""
+        }
+      ],
+      "duration_ms": 1861
+    },
+    {
+      "index": 3,
+      "name": "Critical elements are inside the viewport and not clipped horizontally",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "layout.critical_visible",
+          "target": "testid:socket-status",
+          "type": "hidden",
+          "name": "layout.critical_visible [testid:socket-status]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "testid:socket-status",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [testid:socket-status]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=145 right=257 y=13 bottom=34",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "testid:socket-status",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [testid:socket-status]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "link:control-panel",
+          "type": "hidden",
+          "name": "layout.critical_visible [link:control-panel]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "link:control-panel",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [link:control-panel]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=269 right=359 y=15 bottom=32",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "link:control-panel",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [link:control-panel]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "device:drone-1",
+          "type": "hidden",
+          "name": "layout.critical_visible [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "device:drone-1",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=21 right=354 y=92 bottom=142",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "device:drone-1",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "device:drone-2",
+          "type": "hidden",
+          "name": "layout.critical_visible [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "device:drone-2",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=21 right=354 y=146 bottom=196",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "device:drone-2",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "device:drone-3",
+          "type": "hidden",
+          "name": "layout.critical_visible [device:drone-3]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "device:drone-3",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [device:drone-3]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=21 right=354 y=200 bottom=250",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "device:drone-3",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [device:drone-3]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "device:drone-4",
+          "type": "hidden",
+          "name": "layout.critical_visible [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "device:drone-4",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=21 right=354 y=254 bottom=304",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "device:drone-4",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "testid:status-flight",
+          "type": "hidden",
+          "name": "layout.critical_visible [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "testid:status-flight",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=296 right=354 y=336 bottom=356",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "testid:status-flight",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "testid:telemetry-battery",
+          "type": "hidden",
+          "name": "layout.critical_visible [testid:telemetry-battery]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "testid:telemetry-battery",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [testid:telemetry-battery]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=29 right=176 y=385 bottom=406",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "testid:telemetry-battery",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [testid:telemetry-battery]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "testid:telemetry-alt-rlt",
+          "type": "hidden",
+          "name": "layout.critical_visible [testid:telemetry-alt-rlt]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "testid:telemetry-alt-rlt",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [testid:telemetry-alt-rlt]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=200 right=346 y=385 bottom=406",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "testid:telemetry-alt-rlt",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [testid:telemetry-alt-rlt]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "testid:telemetry-hspeed",
+          "type": "hidden",
+          "name": "layout.critical_visible [testid:telemetry-hspeed]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "testid:telemetry-hspeed",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [testid:telemetry-hspeed]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=29 right=176 y=494 bottom=515",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "testid:telemetry-hspeed",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [testid:telemetry-hspeed]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "testid:telemetry-heading",
+          "type": "hidden",
+          "name": "layout.critical_visible [testid:telemetry-heading]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "testid:telemetry-heading",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [testid:telemetry-heading]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=29 right=176 y=548 bottom=569",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "testid:telemetry-heading",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [testid:telemetry-heading]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "testid:video-state",
+          "type": "hidden",
+          "name": "layout.critical_visible [testid:video-state]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "testid:video-state",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [testid:video-state]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=182 right=201 y=519 bottom=536",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "testid:video-state",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [testid:video-state]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "testid:map-view-2d",
+          "type": "hidden",
+          "name": "layout.critical_visible [testid:map-view-2d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "testid:map-view-2d",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [testid:map-view-2d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=144 right=188 y=625 bottom=654",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "testid:map-view-2d",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [testid:map-view-2d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        },
+        {
+          "id": "layout.critical_visible",
+          "target": "testid:map-view-3d",
+          "type": "hidden",
+          "name": "layout.critical_visible [testid:map-view-3d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "layout.in_viewport_x",
+          "target": "testid:map-view-3d",
+          "type": "out_of_viewport",
+          "name": "layout.in_viewport_x [testid:map-view-3d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0..375",
+          "actual": "x=188 right=232 y=625 bottom=654",
+          "state": ""
+        },
+        {
+          "id": "layout.not_clipped_x",
+          "target": "testid:map-view-3d",
+          "type": "clipped",
+          "name": "layout.not_clipped_x [testid:map-view-3d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0px clipped",
+          "actual": "0px clipped",
+          "state": ""
+        }
+      ],
+      "duration_ms": 341
+    },
+    {
+      "index": 4,
+      "name": "Interactive controls are reachable and receive the pointer",
+      "status": "defect",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": false
+      },
+      "checks": [
+        {
+          "id": "layout.reachable",
+          "target": "link:control-panel",
+          "type": "out_of_viewport",
+          "name": "layout.reachable [link:control-panel]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "on screen after scrolling",
+          "actual": "x=269 right=359 y=15 bottom=32",
+          "state": ""
+        },
+        {
+          "id": "layout.pointer_reaches",
+          "target": "link:control-panel",
+          "type": "covered",
+          "name": "layout.pointer_reaches [link:control-panel]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "layout.reachable",
+          "target": "device:drone-1",
+          "type": "out_of_viewport",
+          "name": "layout.reachable [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "on screen after scrolling",
+          "actual": "x=21 right=354 y=92 bottom=142",
+          "state": ""
+        },
+        {
+          "id": "layout.pointer_reaches",
+          "target": "device:drone-1",
+          "type": "covered",
+          "name": "layout.pointer_reaches [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "layout.reachable",
+          "target": "device:drone-2",
+          "type": "out_of_viewport",
+          "name": "layout.reachable [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "on screen after scrolling",
+          "actual": "x=21 right=354 y=146 bottom=196",
+          "state": ""
+        },
+        {
+          "id": "layout.pointer_reaches",
+          "target": "device:drone-2",
+          "type": "covered",
+          "name": "layout.pointer_reaches [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "layout.reachable",
+          "target": "device:drone-3",
+          "type": "out_of_viewport",
+          "name": "layout.reachable [device:drone-3]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "on screen after scrolling",
+          "actual": "x=21 right=354 y=200 bottom=250",
+          "state": ""
+        },
+        {
+          "id": "layout.pointer_reaches",
+          "target": "device:drone-3",
+          "type": "covered",
+          "name": "layout.pointer_reaches [device:drone-3]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "layout.reachable",
+          "target": "device:drone-4",
+          "type": "out_of_viewport",
+          "name": "layout.reachable [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "on screen after scrolling",
+          "actual": "x=21 right=354 y=217 bottom=267",
+          "state": ""
+        },
+        {
+          "id": "layout.pointer_reaches",
+          "target": "device:drone-4",
+          "type": "covered",
+          "name": "layout.pointer_reaches [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "layout.reachable",
+          "target": "testid:map-view-2d",
+          "type": "out_of_viewport",
+          "name": "layout.reachable [testid:map-view-2d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "on screen after scrolling",
+          "actual": "x=144 right=188 y=625 bottom=654",
+          "state": ""
+        },
+        {
+          "id": "layout.pointer_reaches",
+          "target": "testid:map-view-2d",
+          "type": "covered",
+          "name": "layout.pointer_reaches [testid:map-view-2d]",
+          "phase": "verify",
+          "passed": false,
+          "severity": "error",
+          "expected": "click at centre lands on [data-testid=map-view-2d]",
+          "actual": "lands on region:video-tile",
+          "message": "centre of map 2D button is covered by region:video-tile; 100% of sampled points covered; actionability probe: NOT_ACTIONABLE (intercepted)",
+          "state": "region:video-tile",
+          "observed": {
+            "viewport": {
+              "width": 375,
+              "height": 667
+            },
+            "element": {
+              "label": "map 2D button",
+              "selector": "[data-testid=map-view-2d]",
+              "rect": {
+                "x": 144,
+                "y": 625,
+                "width": 44,
+                "height": 29,
+                "right": 188,
+                "bottom": 654
+              },
+              "visible_rect": {
+                "x": 144,
+                "y": 625,
+                "width": 44,
+                "height": 29,
+                "right": 188,
+                "bottom": 654
+              },
+              "clipped_x": 0
+            },
+            "covered_by": "region:video-tile",
+            "covered_by_rect": {
+              "x": 12,
+              "y": 512,
+              "width": 200,
+              "height": 143,
+              "right": 212,
+              "bottom": 655
+            },
+            "coverage": {
+              "points": 9,
+              "reachable": 0,
+              "fraction": 0,
+              "coveredBy": [
+                "region:video-tile"
+              ]
+            },
+            "actionability": {
+              "method": "playwright trial click (actionability checks only; nothing is clicked)",
+              "stage": "NOT_ACTIONABLE",
+              "reason": "intercepted",
+              "detail": "- <video autoplay=\"\" playsinline=\"\" data-state=\"playing\" class=\"video-player\" data-testid=\"video-player\"></video> from <div class=\"video-tile\">…</div> subtree intercepts pointer events"
+            }
+          },
+          "boxes": [
+            {
+              "label": "map 2D button",
+              "rect": {
+                "x": 143.5,
+                "y": 625.203125,
+                "width": 44,
+                "height": 28.796875
+              }
+            },
+            {
+              "label": "covered by region:video-tile",
+              "rect": {
+                "x": 12,
+                "y": 511.828125,
+                "width": 200,
+                "height": 143.171875
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout.reachable",
+          "target": "testid:map-view-3d",
+          "type": "out_of_viewport",
+          "name": "layout.reachable [testid:map-view-3d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "on screen after scrolling",
+          "actual": "x=188 right=232 y=625 bottom=654",
+          "state": ""
+        },
+        {
+          "id": "layout.pointer_reaches",
+          "target": "testid:map-view-3d",
+          "type": "covered",
+          "name": "layout.pointer_reaches [testid:map-view-3d]",
+          "phase": "verify",
+          "passed": false,
+          "severity": "error",
+          "expected": "click at centre lands on [data-testid=map-view-3d]",
+          "actual": "lands on region:video-tile",
+          "message": "centre of map 3D button is covered by region:video-tile; 67% of sampled points covered; actionability probe: NOT_ACTIONABLE (intercepted)",
+          "state": "region:video-tile",
+          "observed": {
+            "viewport": {
+              "width": 375,
+              "height": 667
+            },
+            "element": {
+              "label": "map 3D button",
+              "selector": "[data-testid=map-view-3d]",
+              "rect": {
+                "x": 188,
+                "y": 625,
+                "width": 44,
+                "height": 29,
+                "right": 232,
+                "bottom": 654
+              },
+              "visible_rect": {
+                "x": 188,
+                "y": 625,
+                "width": 44,
+                "height": 29,
+                "right": 232,
+                "bottom": 654
+              },
+              "clipped_x": 0
+            },
+            "covered_by": "region:video-tile",
+            "covered_by_rect": {
+              "x": 12,
+              "y": 512,
+              "width": 200,
+              "height": 143,
+              "right": 212,
+              "bottom": 655
+            },
+            "coverage": {
+              "points": 9,
+              "reachable": 3,
+              "fraction": 0.33,
+              "coveredBy": [
+                "region:video-tile"
+              ]
+            },
+            "actionability": {
+              "method": "playwright trial click (actionability checks only; nothing is clicked)",
+              "stage": "NOT_ACTIONABLE",
+              "reason": "intercepted",
+              "detail": "- <video autoplay=\"\" playsinline=\"\" data-state=\"playing\" class=\"video-player\" data-testid=\"video-player\"></video> from <div class=\"video-tile\">…</div> subtree intercepts pointer events"
+            }
+          },
+          "boxes": [
+            {
+              "label": "map 3D button",
+              "rect": {
+                "x": 187.5,
+                "y": 625.203125,
+                "width": 44,
+                "height": 28.796875
+              }
+            },
+            {
+              "label": "covered by region:video-tile",
+              "rect": {
+                "x": 12,
+                "y": 511.828125,
+                "width": 200,
+                "height": 143.171875
+              }
+            }
+          ]
+        }
+      ],
+      "duration_ms": 3864
+    },
+    {
+      "index": 5,
+      "name": "Top-level widgets do not overlap",
+      "status": "defect",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": false
+      },
+      "checks": [
+        {
+          "id": "layout.no_overlap",
+          "target": "pair:region:device-telemetry-panel|role:banner",
+          "type": "overlap",
+          "name": "layout.no_overlap [pair:region:device-telemetry-panel|role:banner]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 px² overlap",
+          "actual": "0 px² overlap",
+          "message": "header overlaps device/telemetry panel by 0 px² (header: x=0 right=375 y=0 bottom=48 | device/telemetry panel: x=0 right=375 y=48 bottom=268)",
+          "state": ""
+        },
+        {
+          "id": "layout.no_overlap",
+          "target": "pair:region:video-tile|role:banner",
+          "type": "overlap",
+          "name": "layout.no_overlap [pair:region:video-tile|role:banner]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 px² overlap",
+          "actual": "0 px² overlap",
+          "message": "header overlaps video tile by 0 px² (header: x=0 right=375 y=0 bottom=48 | video tile: x=12 right=212 y=512 bottom=655)",
+          "state": ""
+        },
+        {
+          "id": "layout.no_overlap",
+          "target": "pair:role:banner|testid:map-view-toggle",
+          "type": "overlap",
+          "name": "layout.no_overlap [pair:role:banner|testid:map-view-toggle]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 px² overlap",
+          "actual": "0 px² overlap",
+          "message": "header overlaps map view toggle by 0 px² (header: x=0 right=375 y=0 bottom=48 | map view toggle: x=143 right=233 y=624 bottom=655)",
+          "state": ""
+        },
+        {
+          "id": "layout.no_overlap",
+          "target": "pair:region:device-telemetry-panel|region:video-tile",
+          "type": "overlap",
+          "name": "layout.no_overlap [pair:region:device-telemetry-panel|region:video-tile]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 px² overlap",
+          "actual": "0 px² overlap",
+          "message": "device/telemetry panel overlaps video tile by 0 px² (device/telemetry panel: x=0 right=375 y=48 bottom=268 | video tile: x=12 right=212 y=512 bottom=655)",
+          "state": ""
+        },
+        {
+          "id": "layout.no_overlap",
+          "target": "pair:region:device-telemetry-panel|testid:map-view-toggle",
+          "type": "overlap",
+          "name": "layout.no_overlap [pair:region:device-telemetry-panel|testid:map-view-toggle]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 px² overlap",
+          "actual": "0 px² overlap",
+          "message": "device/telemetry panel overlaps map view toggle by 0 px² (device/telemetry panel: x=0 right=375 y=48 bottom=268 | map view toggle: x=143 right=233 y=624 bottom=655)",
+          "state": ""
+        },
+        {
+          "id": "layout.no_overlap",
+          "target": "pair:region:video-tile|testid:map-view-toggle",
+          "type": "overlap",
+          "name": "layout.no_overlap [pair:region:video-tile|testid:map-view-toggle]",
+          "phase": "verify",
+          "passed": false,
+          "severity": "error",
+          "expected": "0 px² overlap",
+          "actual": "2140 px² overlap",
+          "message": "video tile overlaps map view toggle by 2140 px² (video tile: x=12 right=212 y=512 bottom=655 | map view toggle: x=143 right=233 y=624 bottom=655)",
+          "state": "overlap",
+          "observed": {
+            "viewport": {
+              "width": 375,
+              "height": 667
+            },
+            "overlap_px2": 2140,
+            "overlap_rect": {
+              "x": 143,
+              "y": 624,
+              "width": 70,
+              "height": 31,
+              "right": 212,
+              "bottom": 655
+            },
+            "a": {
+              "target": "region:video-tile",
+              "label": "video tile",
+              "selector": ":has(> [data-testid=\"video-player\"])",
+              "rect": {
+                "x": 12,
+                "y": 512,
+                "width": 200,
+                "height": 143,
+                "right": 212,
+                "bottom": 655
+              },
+              "visible_rect": {
+                "x": 12,
+                "y": 512,
+                "width": 200,
+                "height": 143,
+                "right": 212,
+                "bottom": 655
+              },
+              "clipped_x": 0
+            },
+            "b": {
+              "target": "testid:map-view-toggle",
+              "label": "map view toggle",
+              "selector": "[data-testid=map-view-toggle]",
+              "rect": {
+                "x": 143,
+                "y": 624,
+                "width": 90,
+                "height": 31,
+                "right": 233,
+                "bottom": 655
+              },
+              "visible_rect": {
+                "x": 143,
+                "y": 624,
+                "width": 90,
+                "height": 31,
+                "right": 233,
+                "bottom": 655
+              },
+              "clipped_x": 0
+            }
+          },
+          "boxes": [
+            {
+              "label": "video tile",
+              "rect": {
+                "x": 12,
+                "y": 511.828125,
+                "width": 200,
+                "height": 143.171875
+              }
+            },
+            {
+              "label": "map view toggle",
+              "rect": {
+                "x": 142.5,
+                "y": 624.203125,
+                "width": 90,
+                "height": 30.796875
+              }
+            }
+          ]
+        },
+        {
+          "id": "layout.no_overlap",
+          "target": "pair:region:brand|testid:socket-status",
+          "type": "overlap",
+          "name": "layout.no_overlap [pair:region:brand|testid:socket-status]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 px² overlap",
+          "actual": "0 px² overlap",
+          "message": "brand overlaps socket badge by 0 px² (brand: x=16 right=131 y=14 bottom=33 | socket badge: x=145 right=257 y=13 bottom=34)",
+          "state": ""
+        },
+        {
+          "id": "layout.no_overlap",
+          "target": "pair:link:control-panel|region:brand",
+          "type": "overlap",
+          "name": "layout.no_overlap [pair:link:control-panel|region:brand]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 px² overlap",
+          "actual": "0 px² overlap",
+          "message": "brand overlaps control panel link by 0 px² (brand: x=16 right=131 y=14 bottom=33 | control panel link: x=269 right=359 y=15 bottom=32)",
+          "state": ""
+        },
+        {
+          "id": "layout.no_overlap",
+          "target": "pair:link:control-panel|testid:socket-status",
+          "type": "overlap",
+          "name": "layout.no_overlap [pair:link:control-panel|testid:socket-status]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 px² overlap",
+          "actual": "0 px² overlap",
+          "message": "socket badge overlaps control panel link by 0 px² (socket badge: x=145 right=257 y=13 bottom=34 | control panel link: x=269 right=359 y=15 bottom=32)",
+          "state": ""
+        }
+      ],
+      "duration_ms": 142
+    },
+    {
+      "index": 6,
+      "name": "Selecting a drone still updates telemetry at 375px",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "interaction.action_executed",
+          "target": "device:drone-2",
+          "type": "not_actionable",
+          "name": "interaction.action_executed [device:drone-2]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "selection.clicked_row_selected",
+          "target": "device:drone-2",
+          "type": "mismatch",
+          "name": "selection.clicked_row_selected [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": [
+            "drone-2"
+          ],
+          "actual": [
+            "drone-2"
+          ],
+          "state": ""
+        },
+        {
+          "id": "selection.telemetry_header_follows",
+          "target": "device:drone-2",
+          "type": "mismatch",
+          "name": "selection.telemetry_header_follows [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 2",
+          "actual": "Drone 2",
+          "state": ""
+        }
+      ],
+      "duration_ms": 84,
+      "interaction_stage": "POSTCONDITION_SATISFIED"
+    },
+    {
+      "index": 7,
+      "name": "Runtime health",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "runtime.no_uncaught_errors",
+          "target": "page",
+          "type": "uncaught_error",
+          "name": "runtime.no_uncaught_errors [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no uncaught exceptions",
+          "actual": [],
+          "state": ""
+        },
+        {
+          "id": "runtime.no_unexpected_dialogs",
+          "target": "page",
+          "type": "unexpected_dialog",
+          "name": "runtime.no_unexpected_dialogs [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no dialogs",
+          "actual": [],
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    }
+  ],
+  "runtime": {
+    "page_errors": 0,
+    "console_errors": 0,
+    "dialogs": 0,
+    "failed_requests": 0
+  },
+  "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\evidence\\scenario-003",
+  "evidence": {
+    "failure": "failure.png",
+    "dom": "dom.html",
+    "failure_annotated": "failure-annotated.png",
+    "recording": "recording.webm",
+    "console": "console.json",
+    "ground_truth": "ground_truth.json",
+    "result": "result.json"
+  },
+  "evidence_integrity": {
+    "required": [
+      "recording.webm",
+      "failure.png",
+      "dom.html",
+      "console.json",
+      "ground_truth.json",
+      "result.json"
+    ],
+    "missing": []
+  },
+  "healing": {
+    "summary": {
+      "total_actions": 13,
+      "deterministic": 13,
+      "healed_actions": 0,
+      "memory_hits": 0,
+      "memory_stale": 0,
+      "local_recoveries": 0,
+      "llm_calls": 0,
+      "llm_successes": 0,
+      "llm_latency_ms_total": 0,
+      "llm_tokens_total": 0,
+      "unresolved": 0,
+      "rejected": 0,
+      "target_absent": 0,
+      "healing_failures": 0,
+      "status": "NOT_NEEDED"
+    },
+    "provider": "none",
+    "model": null,
+    "actions": [
+      {
+        "scenario_id": "scenario-003",
+        "step": "Critical elements are inside the viewport and not clipped horizontally",
+        "step_id": "select-drone-1",
+        "intent": "Select Drone 1 in the device list",
+        "original_target": "device:drone-1",
+        "original_selector": "[data-testid=\"device-row-drone-1\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 4,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Critical elements are inside the viewport and not clipped horizontally",
+        "step_id": "select-drone-2",
+        "intent": "Select Drone 2 in the device list",
+        "original_target": "device:drone-2",
+        "original_selector": "[data-testid=\"device-row-drone-2\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 1,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Critical elements are inside the viewport and not clipped horizontally",
+        "step_id": "select-drone-3",
+        "intent": "Select Drone 3 in the device list",
+        "original_target": "device:drone-3",
+        "original_selector": "[data-testid=\"device-row-drone-3\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 1,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Critical elements are inside the viewport and not clipped horizontally",
+        "step_id": "select-drone-4",
+        "intent": "Select Drone 4 in the device list",
+        "original_target": "device:drone-4",
+        "original_selector": "[data-testid=\"device-row-drone-4\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 2,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Critical elements are inside the viewport and not clipped horizontally",
+        "step_id": "map-view-2d",
+        "intent": "Switch the map to the 2D view",
+        "original_target": "testid:map-view-2d",
+        "original_selector": "[data-testid=\"map-view-2d\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 2,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Critical elements are inside the viewport and not clipped horizontally",
+        "step_id": "map-view-3d",
+        "intent": "Switch the map to the 3D view",
+        "original_target": "testid:map-view-3d",
+        "original_selector": "[data-testid=\"map-view-3d\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 1,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Interactive controls are reachable and receive the pointer",
+        "step_id": "select-drone-1",
+        "intent": "Select Drone 1 in the device list",
+        "original_target": "device:drone-1",
+        "original_selector": "[data-testid=\"device-row-drone-1\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 3,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Interactive controls are reachable and receive the pointer",
+        "step_id": "select-drone-2",
+        "intent": "Select Drone 2 in the device list",
+        "original_target": "device:drone-2",
+        "original_selector": "[data-testid=\"device-row-drone-2\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 2,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Interactive controls are reachable and receive the pointer",
+        "step_id": "select-drone-3",
+        "intent": "Select Drone 3 in the device list",
+        "original_target": "device:drone-3",
+        "original_selector": "[data-testid=\"device-row-drone-3\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 1,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Interactive controls are reachable and receive the pointer",
+        "step_id": "select-drone-4",
+        "intent": "Select Drone 4 in the device list",
+        "original_target": "device:drone-4",
+        "original_selector": "[data-testid=\"device-row-drone-4\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 1,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Interactive controls are reachable and receive the pointer",
+        "step_id": "map-view-2d",
+        "intent": "Switch the map to the 2D view",
+        "original_target": "testid:map-view-2d",
+        "original_selector": "[data-testid=\"map-view-2d\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 1,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Interactive controls are reachable and receive the pointer",
+        "step_id": "map-view-3d",
+        "intent": "Switch the map to the 3D view",
+        "original_target": "testid:map-view-3d",
+        "original_selector": "[data-testid=\"map-view-3d\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 3,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-003",
+        "step": "Selecting a drone still updates telemetry at 375px",
+        "step_id": "select-drone-2",
+        "intent": "Select Drone 2 in the device list",
+        "original_target": "device:drone-2",
+        "original_selector": "[data-testid=\"device-row-drone-2\"]",
+        "mode": "action",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 2,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "satisfied",
+        "clicks_dispatched": 1,
+        "reason": "known selector resolved"
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "t": 223,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connecting...",
+    "location": "http://localhost:4010/@vite/client:494"
+  },
+  {
+    "t": 232,
+    "kind": "console",
+    "level": "debug",
+    "text": "[vite] connected.",
+    "location": "http://localhost:4010/@vite/client:617"
+  },
+  {
+    "t": 293,
+    "kind": "console",
+    "level": "info",
+    "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "location": "http://localhost:4010/node_modules/.vite/deps/chunk-BTBCOMUJ.js?v=1a577131:21550"
+  },
+  {
+    "t": 359,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 359,
+    "kind": "console",
+    "level": "warning",
+    "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+    "location": "http://localhost:4010/node_modules/.vite/deps/react-router-dom.js?v=eefcbe2a:4416"
+  },
+  {
+    "t": 3858,
+    "kind": "console",
+    "level": "warning",
+    "text": "[.WebGL-0x1a1c00b0cc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "location": "http://localhost:4010/:0"
+  },
+  {
+    "t": 3883,
+    "kind": "console",
+    "level": "warning",
+    "text": "[.WebGL-0x1a1c00b0cc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "location": "http://localhost:4010/:0"
+  },
+  {
+    "t": 3884,
+    "kind": "console",
+    "level": "warning",
+    "text": "[.WebGL-0x1a1c00b0cc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "location": "http://localhost:4010/:0"
+  },
+  {
+    "t": 3884,
+    "kind": "console",
+    "level": "warning",
+    "text": "[.WebGL-0x1a1c00b0cc00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
+    "location": "http://localhost:4010/:0"
+  }
+]

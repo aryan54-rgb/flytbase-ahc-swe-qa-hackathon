@@ -1,0 +1,6 @@
+node_modules
+evidence/*
+!evidence/.gitkeep
+memory/run-history.jsonl
+baseline/evidence/
+memory/healing-memory.json

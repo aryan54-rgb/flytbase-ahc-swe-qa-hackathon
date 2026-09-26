@@ -1,0 +1,350 @@
+{
+  "schema": "cockpit-qa/baseline@1",
+  "baseline_id": "2026-09-26T09-39-56-141Z",
+  "recorded_at": "2026-09-26T09:42:15.300Z",
+  "runs": 3,
+  "stable": true,
+  "versions": {
+    "harness": {
+      "version": "0.1.0",
+      "source_hash": "d5a784687a20"
+    },
+    "app": {
+      "git_commit": "16db625db9c954d709acf5b25d4c24bb8c8e6eb1",
+      "git_branch": "main",
+      "product_dirty": false,
+      "dirty_files": []
+    }
+  },
+  "environment": {
+    "cockpitUrl": "http://localhost:4010",
+    "apiUrl": "http://localhost:4000",
+    "browser": "chromium 153.0.8010.12"
+  },
+  "scenarios": {
+    "scenario-001": {
+      "title": "Device List Integrity",
+      "invariant": "set(UI device-row ids) == set(API drone ids) and every row shows its API name, dock name and simulator flight status.",
+      "statuses": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "stable_status": "PASS",
+      "fingerprints": [],
+      "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\baseline\\evidence\\scenario-001"
+    },
+    "scenario-002": {
+      "title": "Device Selection Synchronization",
+      "invariant": "selectedRow.id == telemetryHeader.device == videoHeader.device == device whose ground-truth heading/status the telemetry shows.",
+      "statuses": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "stable_status": "PASS",
+      "fingerprints": [],
+      "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\baseline\\evidence\\scenario-002"
+    },
+    "scenario-003": {
+      "title": "375px Responsive Integrity",
+      "invariant": "For every critical element e: 0 <= e.left && e.right <= 375 && clippedX(e) == 0; for interactive e: hitTest(center(e)) ∈ e; pairwise overlap of top-level widgets == 0.",
+      "statuses": [
+        "DEFECT_FOUND",
+        "DEFECT_FOUND",
+        "DEFECT_FOUND"
+      ],
+      "stable_status": "DEFECT_FOUND",
+      "fingerprints": [
+        "1e5be47648b9",
+        "2b098d9eeeff",
+        "431994fde8de"
+      ],
+      "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\baseline\\evidence\\scenario-003"
+    },
+    "scenario-004": {
+      "title": "Cross-Tier Flight State Consistency",
+      "invariant": "For all t: order(ui_status(t)) <= order(api_status(t)), and any ui/api mismatch lasts <= 2500 ms; at steady state ui_alt ≈ api_height.",
+      "statuses": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "stable_status": "PASS",
+      "fingerprints": [],
+      "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\baseline\\evidence\\scenario-004"
+    },
+    "scenario-005": {
+      "title": "Route Robustness",
+      "invariant": "For every path p: status(p) < 400 && finalPath(p) == \"/\" && cockpitRendered && !scriptExecuted && !reflected.",
+      "statuses": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "stable_status": "PASS",
+      "fingerprints": [],
+      "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\baseline\\evidence\\scenario-005"
+    },
+    "scenario-006": {
+      "title": "Map View Toggle Behaviour",
+      "invariant": "After activating mode m: runtime(tiltEnabled) == (m == 3D) && |camera.pitch - pitch(m)| <= 1° && aria-pressed(m) == true && aria-pressed(other) == false.",
+      "statuses": [
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "stable_status": "PASS",
+      "fingerprints": [],
+      "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\baseline\\evidence\\scenario-006"
+    }
+  },
+  "findings": [
+    {
+      "fingerprint": "431994fde8de",
+      "signature": "scenario-003 | layout.no_overlap | pair:region:video-tile|testid:map-view-toggle | overlap | overlap",
+      "scenario_id": "scenario-003",
+      "check_id": "layout.no_overlap",
+      "target": "pair:region:video-tile|testid:map-view-toggle",
+      "failure_type": "overlap",
+      "state": "overlap",
+      "summary": "layout.no_overlap [pair:region:video-tile|testid:map-view-toggle]: video tile overlaps map view toggle by 2140 px² (video tile: x=12 right=212 y=512 bottom=655 | map view toggle: x=143 right=233 y=624 bottom=655)",
+      "observed_values": {
+        "expected": "0 px² overlap",
+        "actual": "2140 px² overlap",
+        "observed": {
+          "viewport": {
+            "width": 375,
+            "height": 667
+          },
+          "overlap_px2": 2140,
+          "overlap_rect": {
+            "x": 143,
+            "y": 624,
+            "width": 70,
+            "height": 31,
+            "right": 212,
+            "bottom": 655
+          },
+          "a": {
+            "target": "region:video-tile",
+            "label": "video tile",
+            "selector": ":has(> [data-testid=\"video-player\"])",
+            "rect": {
+              "x": 12,
+              "y": 512,
+              "width": 200,
+              "height": 143,
+              "right": 212,
+              "bottom": 655
+            },
+            "visible_rect": {
+              "x": 12,
+              "y": 512,
+              "width": 200,
+              "height": 143,
+              "right": 212,
+              "bottom": 655
+            },
+            "clipped_x": 0
+          },
+          "b": {
+            "target": "testid:map-view-toggle",
+            "label": "map view toggle",
+            "selector": "[data-testid=map-view-toggle]",
+            "rect": {
+              "x": 143,
+              "y": 624,
+              "width": 90,
+              "height": 31,
+              "right": 233,
+              "bottom": 655
+            },
+            "visible_rect": {
+              "x": 143,
+              "y": 624,
+              "width": 90,
+              "height": 31,
+              "right": 233,
+              "bottom": 655
+            },
+            "clipped_x": 0
+          }
+        }
+      },
+      "seen_in_runs": 3,
+      "runs_total": 3,
+      "baseline_state": "STABLE_BASELINE",
+      "stable": true,
+      "first_seen": "2026-09-26T09:40:09.435Z",
+      "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\baseline\\evidence\\scenario-003",
+      "evidence_files": {
+        "failure": "failure.png",
+        "dom": "dom.html",
+        "failure_annotated": "failure-annotated.png",
+        "recording": "recording.webm",
+        "console": "console.json",
+        "ground_truth": "ground_truth.json",
+        "result": "result.json"
+      }
+    },
+    {
+      "fingerprint": "2b098d9eeeff",
+      "signature": "scenario-003 | layout.pointer_reaches | testid:map-view-2d | covered | region:video-tile",
+      "scenario_id": "scenario-003",
+      "check_id": "layout.pointer_reaches",
+      "target": "testid:map-view-2d",
+      "failure_type": "covered",
+      "state": "region:video-tile",
+      "summary": "layout.pointer_reaches [testid:map-view-2d]: centre of map 2D button is covered by region:video-tile; 100% of sampled points covered; actionability probe: NOT_ACTIONABLE (intercepted)",
+      "observed_values": {
+        "expected": "click at centre lands on [data-testid=map-view-2d]",
+        "actual": "lands on region:video-tile",
+        "observed": {
+          "viewport": {
+            "width": 375,
+            "height": 667
+          },
+          "element": {
+            "label": "map 2D button",
+            "selector": "[data-testid=map-view-2d]",
+            "rect": {
+              "x": 144,
+              "y": 625,
+              "width": 44,
+              "height": 29,
+              "right": 188,
+              "bottom": 654
+            },
+            "visible_rect": {
+              "x": 144,
+              "y": 625,
+              "width": 44,
+              "height": 29,
+              "right": 188,
+              "bottom": 654
+            },
+            "clipped_x": 0
+          },
+          "covered_by": "region:video-tile",
+          "covered_by_rect": {
+            "x": 12,
+            "y": 512,
+            "width": 200,
+            "height": 143,
+            "right": 212,
+            "bottom": 655
+          },
+          "coverage": {
+            "points": 9,
+            "reachable": 0,
+            "fraction": 0,
+            "coveredBy": [
+              "region:video-tile"
+            ]
+          },
+          "actionability": {
+            "method": "playwright trial click (actionability checks only; nothing is clicked)",
+            "stage": "NOT_ACTIONABLE",
+            "reason": "intercepted",
+            "detail": "- <video autoplay=\"\" playsinline=\"\" data-state=\"playing\" class=\"video-player\" data-testid=\"video-player\"></video> from <div class=\"video-tile\">…</div> subtree intercepts pointer events"
+          }
+        }
+      },
+      "seen_in_runs": 3,
+      "runs_total": 3,
+      "baseline_state": "STABLE_BASELINE",
+      "stable": true,
+      "first_seen": "2026-09-26T09:40:09.435Z",
+      "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\baseline\\evidence\\scenario-003",
+      "evidence_files": {
+        "failure": "failure.png",
+        "dom": "dom.html",
+        "failure_annotated": "failure-annotated.png",
+        "recording": "recording.webm",
+        "console": "console.json",
+        "ground_truth": "ground_truth.json",
+        "result": "result.json"
+      }
+    },
+    {
+      "fingerprint": "1e5be47648b9",
+      "signature": "scenario-003 | layout.pointer_reaches | testid:map-view-3d | covered | region:video-tile",
+      "scenario_id": "scenario-003",
+      "check_id": "layout.pointer_reaches",
+      "target": "testid:map-view-3d",
+      "failure_type": "covered",
+      "state": "region:video-tile",
+      "summary": "layout.pointer_reaches [testid:map-view-3d]: centre of map 3D button is covered by region:video-tile; 67% of sampled points covered; actionability probe: NOT_ACTIONABLE (intercepted)",
+      "observed_values": {
+        "expected": "click at centre lands on [data-testid=map-view-3d]",
+        "actual": "lands on region:video-tile",
+        "observed": {
+          "viewport": {
+            "width": 375,
+            "height": 667
+          },
+          "element": {
+            "label": "map 3D button",
+            "selector": "[data-testid=map-view-3d]",
+            "rect": {
+              "x": 188,
+              "y": 625,
+              "width": 44,
+              "height": 29,
+              "right": 232,
+              "bottom": 654
+            },
+            "visible_rect": {
+              "x": 188,
+              "y": 625,
+              "width": 44,
+              "height": 29,
+              "right": 232,
+              "bottom": 654
+            },
+            "clipped_x": 0
+          },
+          "covered_by": "region:video-tile",
+          "covered_by_rect": {
+            "x": 12,
+            "y": 512,
+            "width": 200,
+            "height": 143,
+            "right": 212,
+            "bottom": 655
+          },
+          "coverage": {
+            "points": 9,
+            "reachable": 3,
+            "fraction": 0.33,
+            "coveredBy": [
+              "region:video-tile"
+            ]
+          },
+          "actionability": {
+            "method": "playwright trial click (actionability checks only; nothing is clicked)",
+            "stage": "NOT_ACTIONABLE",
+            "reason": "intercepted",
+            "detail": "- <video autoplay=\"\" playsinline=\"\" data-state=\"playing\" class=\"video-player\" data-testid=\"video-player\"></video> from <div class=\"video-tile\">…</div> subtree intercepts pointer events"
+          }
+        }
+      },
+      "seen_in_runs": 3,
+      "runs_total": 3,
+      "baseline_state": "STABLE_BASELINE",
+      "stable": true,
+      "first_seen": "2026-09-26T09:40:09.435Z",
+      "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\baseline\\evidence\\scenario-003",
+      "evidence_files": {
+        "failure": "failure.png",
+        "dom": "dom.html",
+        "failure_annotated": "failure-annotated.png",
+        "recording": "recording.webm",
+        "console": "console.json",
+        "ground_truth": "ground_truth.json",
+        "result": "result.json"
+      }
+    }
+  ]
+}

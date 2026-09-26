@@ -1,0 +1,640 @@
+{
+  "schema": "cockpit-qa/result@2",
+  "scenario": {
+    "id": "scenario-004",
+    "title": "Cross-Tier Flight State Consistency",
+    "user_goal": "When a drone takes off, the cockpit shows the same flight status and altitude the simulator reports.",
+    "starting_state": {
+      "description": "Simulator reset (drone-1 standby on its dock, height 0); cockpit at / with drone-1 selected.",
+      "path": "/",
+      "simulator": "reset",
+      "waitForDevices": true
+    },
+    "steps": [
+      "drone-1 starts in standby (simulator and UI)",
+      "Send takeoff via POST /api/control/command",
+      "UI tracks simulator through the climb",
+      "In flight: UI altitude holds and horizontal speed matches cruise",
+      "Cleanup: reset simulator to baseline"
+    ],
+    "expected_behavior": [
+      "drone-1 begins in standby in both simulator and UI.",
+      "POST /api/control/command {type: takeoff} is acknowledged (ok: true).",
+      "The simulator moves taking_off -> in_flight and climbs to 30 m.",
+      "The UI status pill and device-row status follow the simulator within 2500 ms and are never ahead of it.",
+      "The UI altitude never decreases during the climb and settles at the simulator height.",
+      "Once in flight the UI horizontal speed matches cruise speed."
+    ],
+    "invariant": "For all t: order(ui_status(t)) <= order(api_status(t)), and any ui/api mismatch lasts <= 2500 ms; at steady state ui_alt ≈ api_height.",
+    "evidence_requirements": [
+      "recording",
+      "screenshot_on_failure",
+      "dom_on_failure",
+      "console",
+      "ground_truth",
+      "result"
+    ],
+    "tags": [
+      "level-1",
+      "ground-truth",
+      "cross-tier",
+      "telemetry"
+    ]
+  },
+  "status": "PASS",
+  "status_reason": "all invariants held",
+  "findings": [],
+  "incident_count": 0,
+  "baseline_comparison": {
+    "baseline_id": "2026-09-26T09-39-56-141Z",
+    "known_stable": [],
+    "known_intermittent": [],
+    "new": [],
+    "masked": [],
+    "absent_intermittent": []
+  },
+  "started_at": "2026-09-26T10:13:13.808Z",
+  "finished_at": "2026-09-26T10:13:25.688Z",
+  "duration_ms": 11880,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "versions": {
+    "harness": {
+      "version": "0.1.0",
+      "source_hash": "d5a784687a20"
+    },
+    "app": {
+      "git_commit": "16db625db9c954d709acf5b25d4c24bb8c8e6eb1",
+      "git_branch": "main",
+      "product_dirty": true,
+      "dirty_files": [
+        "submission/"
+      ]
+    }
+  },
+  "environment": {
+    "cockpitUrl": "http://localhost:4010",
+    "apiUrl": "http://localhost:4000",
+    "browser": "chromium 153.0.8010.12",
+    "mutation": null
+  },
+  "warnings": [],
+  "steps": [
+    {
+      "index": 1,
+      "name": "Starting state: cockpit renders the device list",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "app.device_list_rendered",
+          "target": "region:device-list",
+          "type": "blank",
+          "name": "app.device_list_rendered [region:device-list]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "message": "no device rows within 30000 ms while API reports 4 drones",
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    },
+    {
+      "index": 2,
+      "name": "drone-1 starts in standby (simulator and UI)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "interaction.action_executed",
+          "target": "device:drone-1",
+          "type": "not_actionable",
+          "name": "interaction.action_executed [device:drone-1]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_status_matches_sim",
+          "target": "testid:status-flight",
+          "type": "mismatch",
+          "name": "UI status pill shows standby",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "standby",
+          "actual": "standby",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_altitude_matches_sim",
+          "target": "testid:telemetry-alt-rlt",
+          "type": "mismatch",
+          "name": "UI altitude is ~0 m at standby",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 ± 0.5",
+          "actual": 0,
+          "state": ""
+        }
+      ],
+      "duration_ms": 869,
+      "interaction_stage": "POSTCONDITION_SATISFIED"
+    },
+    {
+      "index": 3,
+      "name": "Send takeoff via POST /api/control/command",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "control.command_http_ok",
+          "target": "api:/api/control/command",
+          "type": "http_error",
+          "name": "control.command_http_ok [api:/api/control/command]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": 200,
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "control.command_acked",
+          "target": "api:/api/control/command",
+          "type": "mismatch",
+          "name": "control.command_acked [api:/api/control/command]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": true,
+          "actual": true,
+          "state": ""
+        },
+        {
+          "id": "control.sim_left_standby",
+          "target": "sim:drone-1",
+          "type": "timeout",
+          "name": "control.sim_left_standby [sim:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "taking_off|in_flight",
+          "actual": "taking_off",
+          "state": ""
+        }
+      ],
+      "duration_ms": 22
+    },
+    {
+      "index": 4,
+      "name": "UI tracks simulator through the climb",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "flight.ui_converges_to_in_flight",
+          "target": "testid:status-flight",
+          "type": "timeout",
+          "name": "flight.ui_converges_to_in_flight [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "UI in_flight @ 30 m (2 consecutive samples)",
+          "actual": {
+            "t": 9795,
+            "ui_status": "in_flight",
+            "ui_row_status": "in_flight",
+            "ui_alt": 30,
+            "api_status": "in_flight",
+            "api_height": 30
+          },
+          "state": ""
+        },
+        {
+          "id": "flight.ui_never_ahead_of_sim",
+          "target": "testid:status-flight",
+          "type": "order_violation",
+          "name": "flight.ui_never_ahead_of_sim [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "never ahead on 2+ consecutive samples",
+          "actual": "0 consecutive samples ahead from t=nullms",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_ahead_single_sample",
+          "target": "testid:status-flight",
+          "type": "order_violation",
+          "name": "flight.ui_ahead_single_sample [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "warn",
+          "expected": "never ahead",
+          "actual": "0 isolated sample(s)",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_lag_bounded",
+          "target": "testid:status-flight",
+          "type": "lag",
+          "name": "flight.ui_lag_bounded [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "observed staleness <= 2500 ms",
+          "actual": "363 ms observed stale",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_status_flicker",
+          "target": "testid:status-flight",
+          "type": "lag",
+          "name": "flight.ui_status_flicker [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "warn",
+          "expected": "no reversion after convergence",
+          "actual": [],
+          "state": ""
+        },
+        {
+          "id": "flight.ui_never_ahead_of_sim",
+          "target": "device:drone-1",
+          "type": "order_violation",
+          "name": "flight.ui_never_ahead_of_sim [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "never ahead on 2+ consecutive samples",
+          "actual": "0 consecutive samples ahead from t=nullms",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_ahead_single_sample",
+          "target": "device:drone-1",
+          "type": "order_violation",
+          "name": "flight.ui_ahead_single_sample [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "warn",
+          "expected": "never ahead",
+          "actual": "0 isolated sample(s)",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_lag_bounded",
+          "target": "device:drone-1",
+          "type": "lag",
+          "name": "flight.ui_lag_bounded [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "observed staleness <= 2500 ms",
+          "actual": "363 ms observed stale",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_status_flicker",
+          "target": "device:drone-1",
+          "type": "lag",
+          "name": "flight.ui_status_flicker [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "warn",
+          "expected": "no reversion after convergence",
+          "actual": [],
+          "state": ""
+        },
+        {
+          "id": "flight.ui_valid_states_only",
+          "target": "testid:status-flight",
+          "type": "invalid_state",
+          "name": "flight.ui_valid_states_only [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": [
+            "standby",
+            "taking_off",
+            "in_flight"
+          ],
+          "actual": [],
+          "state": ""
+        },
+        {
+          "id": "flight.ui_altitude_monotonic_climb",
+          "target": "testid:telemetry-alt-rlt",
+          "type": "non_monotonic",
+          "name": "flight.ui_altitude_monotonic_climb [testid:telemetry-alt-rlt]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no sustained altitude regression",
+          "actual": "0 consecutive samples below the running max",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_altitude_single_dip",
+          "target": "testid:telemetry-alt-rlt",
+          "type": "non_monotonic",
+          "name": "flight.ui_altitude_single_dip [testid:telemetry-alt-rlt]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "warn",
+          "expected": "non-decreasing",
+          "actual": "0 isolated dip sample(s)",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_altitude_rises_to_cruise",
+          "target": "testid:telemetry-alt-rlt",
+          "type": "mismatch",
+          "name": "flight.ui_altitude_rises_to_cruise [testid:telemetry-alt-rlt]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "0 -> ~30 m",
+          "actual": "0 -> 30",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_altitude_matches_sim",
+          "target": "testid:telemetry-alt-rlt",
+          "type": "mismatch",
+          "name": "flight.ui_altitude_matches_sim [testid:telemetry-alt-rlt]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "30 ± 0.5",
+          "actual": 30,
+          "state": ""
+        },
+        {
+          "id": "flight.row_and_header_agree",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "flight.row_and_header_agree [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "in_flight",
+          "actual": "in_flight",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_shows_taking_off",
+          "target": "testid:status-flight",
+          "type": "missing",
+          "name": "flight.ui_shows_taking_off [testid:status-flight]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "warn",
+          "expected": "taking_off seen",
+          "actual": [
+            "standby",
+            "taking_off",
+            "in_flight"
+          ],
+          "state": ""
+        }
+      ],
+      "duration_ms": 9799
+    },
+    {
+      "index": 5,
+      "name": "In flight: UI altitude holds and horizontal speed matches cruise",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "flight.ui_status_matches_sim",
+          "target": "testid:status-flight",
+          "type": "mismatch",
+          "name": "UI still in_flight at cruise",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "in_flight",
+          "actual": "in_flight",
+          "state": ""
+        },
+        {
+          "id": "flight.ui_hspeed_matches_cruise",
+          "target": "testid:telemetry-hspeed",
+          "type": "mismatch",
+          "name": "flight.ui_hspeed_matches_cruise [testid:telemetry-hspeed]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "10 ± 0.5",
+          "actual": 10,
+          "state": ""
+        },
+        {
+          "id": "flight.ui_altitude_holds_cruise",
+          "target": "testid:telemetry-alt-rlt",
+          "type": "mismatch",
+          "name": "flight.ui_altitude_holds_cruise [testid:telemetry-alt-rlt]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "30 ± 0.5",
+          "actual": 30,
+          "state": ""
+        }
+      ],
+      "duration_ms": 50
+    },
+    {
+      "index": 6,
+      "name": "Cleanup: reset simulator to baseline",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": false,
+        "ok": null
+      },
+      "checks": [
+        {
+          "id": "cleanup.sim_restored",
+          "target": "sim:drone-1",
+          "type": "mismatch",
+          "name": "cleanup.sim_restored [sim:drone-1]",
+          "phase": "action",
+          "passed": true,
+          "severity": "warn",
+          "expected": "standby",
+          "actual": "standby",
+          "state": ""
+        }
+      ],
+      "duration_ms": 23
+    },
+    {
+      "index": 7,
+      "name": "Runtime health",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "runtime.no_uncaught_errors",
+          "target": "page",
+          "type": "uncaught_error",
+          "name": "runtime.no_uncaught_errors [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no uncaught exceptions",
+          "actual": [],
+          "state": ""
+        },
+        {
+          "id": "runtime.no_unexpected_dialogs",
+          "target": "page",
+          "type": "unexpected_dialog",
+          "name": "runtime.no_unexpected_dialogs [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no dialogs",
+          "actual": [],
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    }
+  ],
+  "runtime": {
+    "page_errors": 0,
+    "console_errors": 0,
+    "dialogs": 0,
+    "failed_requests": 0
+  },
+  "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\evidence\\scenario-004",
+  "evidence": {
+    "final": "final.png",
+    "recording": "recording.webm",
+    "console": "console.json",
+    "ground_truth": "ground_truth.json",
+    "result": "result.json"
+  },
+  "evidence_integrity": {
+    "required": [
+      "console.json",
+      "ground_truth.json",
+      "result.json"
+    ],
+    "missing": []
+  },
+  "healing": {
+    "summary": {
+      "total_actions": 1,
+      "deterministic": 1,
+      "healed_actions": 0,
+      "memory_hits": 0,
+      "memory_stale": 0,
+      "local_recoveries": 0,
+      "llm_calls": 0,
+      "llm_successes": 0,
+      "llm_latency_ms_total": 0,
+      "llm_tokens_total": 0,
+      "unresolved": 0,
+      "rejected": 0,
+      "target_absent": 0,
+      "healing_failures": 0,
+      "status": "NOT_NEEDED"
+    },
+    "provider": "none",
+    "model": null,
+    "actions": [
+      {
+        "scenario_id": "scenario-004",
+        "step": "drone-1 starts in standby (simulator and UI)",
+        "step_id": "select-drone-1",
+        "intent": "Select Drone 1 in the device list",
+        "original_target": "device:drone-1",
+        "original_selector": "[data-testid=\"device-row-drone-1\"]",
+        "mode": "action",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 4,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "satisfied",
+        "clicks_dispatched": 1,
+        "reason": "known selector resolved"
+      }
+    ]
+  }
+}

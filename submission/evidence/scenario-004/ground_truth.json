@@ -1,0 +1,893 @@
+[
+  {
+    "label": "preflight",
+    "t": 2,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15570
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 20,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "start",
+    "t": 86,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15570
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 0,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "baseline",
+    "t": 1272,
+    "extra": {
+      "ui": {
+        "telemetryHeader": "Drone Telemetry · Drone 1",
+        "videoHeader": "FPV · Drone 1",
+        "flightStatus": "standby",
+        "headingDeg": 47,
+        "altitudeM": 0,
+        "selectedRowIds": [
+          "drone-1"
+        ]
+      },
+      "converged": true,
+      "elapsedMs": 9
+    }
+  },
+  {
+    "label": "takeoff_ack",
+    "t": 1280,
+    "extra": {
+      "status": 200,
+      "ok": true,
+      "body": {
+        "ok": true
+      }
+    }
+  },
+  {
+    "label": "climb_trace",
+    "t": 11092,
+    "extra": {
+      "converged": true,
+      "elapsedMs": 9795,
+      "max_sample_gap_ms": 768,
+      "header_convergence": {
+        "transitions": [
+          {
+            "to": "taking_off",
+            "api_first_t": 141,
+            "ui_first_t": 885,
+            "last_stale_t": 346,
+            "lower_ms": 205,
+            "upper_ms": 744,
+            "skipped_by_ui": false,
+            "max_gap_ms": 768
+          },
+          {
+            "to": "in_flight",
+            "api_first_t": 9189,
+            "ui_first_t": 9673,
+            "last_stale_t": 9552,
+            "lower_ms": 363,
+            "upper_ms": 484,
+            "skipped_by_ui": false,
+            "max_gap_ms": 134
+          }
+        ],
+        "regressions": [],
+        "max_sample_gap_ms": 768
+      },
+      "row_convergence": {
+        "transitions": [
+          {
+            "to": "taking_off",
+            "api_first_t": 141,
+            "ui_first_t": 885,
+            "last_stale_t": 346,
+            "lower_ms": 205,
+            "upper_ms": 744,
+            "skipped_by_ui": false,
+            "max_gap_ms": 768
+          },
+          {
+            "to": "in_flight",
+            "api_first_t": 9189,
+            "ui_first_t": 9673,
+            "last_stale_t": 9552,
+            "lower_ms": 363,
+            "upper_ms": 484,
+            "skipped_by_ui": false,
+            "max_gap_ms": 134
+          }
+        ],
+        "regressions": [],
+        "max_sample_gap_ms": 768
+      },
+      "samples": [
+        {
+          "t": 141,
+          "ui_status": "standby",
+          "ui_row_status": "standby",
+          "ui_alt": 0,
+          "api_status": "taking_off",
+          "api_height": 0
+        },
+        {
+          "t": 346,
+          "ui_status": "standby",
+          "ui_row_status": "standby",
+          "ui_alt": 0,
+          "api_status": "taking_off",
+          "api_height": 1.5
+        },
+        {
+          "t": 885,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 1.5,
+          "api_status": "taking_off",
+          "api_height": 3
+        },
+        {
+          "t": 1042,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 3,
+          "api_status": "taking_off",
+          "api_height": 3
+        },
+        {
+          "t": 1182,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 3,
+          "api_status": "taking_off",
+          "api_height": 3
+        },
+        {
+          "t": 1399,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 4.5,
+          "api_status": "taking_off",
+          "api_height": 4.5
+        },
+        {
+          "t": 1518,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 4.5,
+          "api_status": "taking_off",
+          "api_height": 4.5
+        },
+        {
+          "t": 1835,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 4.5,
+          "api_status": "taking_off",
+          "api_height": 6
+        },
+        {
+          "t": 2603,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 6,
+          "api_status": "taking_off",
+          "api_height": 7.5
+        },
+        {
+          "t": 2775,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 9,
+          "api_status": "taking_off",
+          "api_height": 9
+        },
+        {
+          "t": 2899,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 9,
+          "api_status": "taking_off",
+          "api_height": 9
+        },
+        {
+          "t": 3041,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 9,
+          "api_status": "taking_off",
+          "api_height": 9
+        },
+        {
+          "t": 3373,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 10.5,
+          "api_status": "taking_off",
+          "api_height": 10.5
+        },
+        {
+          "t": 3538,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 10.5,
+          "api_status": "taking_off",
+          "api_height": 10.5
+        },
+        {
+          "t": 3696,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 12,
+          "api_status": "taking_off",
+          "api_height": 12
+        },
+        {
+          "t": 3969,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 12,
+          "api_status": "taking_off",
+          "api_height": 12
+        },
+        {
+          "t": 4152,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 13.5,
+          "api_status": "taking_off",
+          "api_height": 13.5
+        },
+        {
+          "t": 4286,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 13.5,
+          "api_status": "taking_off",
+          "api_height": 13.5
+        },
+        {
+          "t": 4443,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 13.5,
+          "api_status": "taking_off",
+          "api_height": 13.5
+        },
+        {
+          "t": 4631,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 15,
+          "api_status": "taking_off",
+          "api_height": 15
+        },
+        {
+          "t": 4762,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 15,
+          "api_status": "taking_off",
+          "api_height": 15
+        },
+        {
+          "t": 4886,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 15,
+          "api_status": "taking_off",
+          "api_height": 15
+        },
+        {
+          "t": 5130,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 16.5,
+          "api_status": "taking_off",
+          "api_height": 16.5
+        },
+        {
+          "t": 5277,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 16.5,
+          "api_status": "taking_off",
+          "api_height": 16.5
+        },
+        {
+          "t": 5412,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 16.5,
+          "api_status": "taking_off",
+          "api_height": 16.5
+        },
+        {
+          "t": 5573,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 18,
+          "api_status": "taking_off",
+          "api_height": 18
+        },
+        {
+          "t": 5723,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 18,
+          "api_status": "taking_off",
+          "api_height": 18
+        },
+        {
+          "t": 5899,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 18,
+          "api_status": "taking_off",
+          "api_height": 18
+        },
+        {
+          "t": 6131,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 19.5,
+          "api_status": "taking_off",
+          "api_height": 19.5
+        },
+        {
+          "t": 6289,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 19.5,
+          "api_status": "taking_off",
+          "api_height": 19.5
+        },
+        {
+          "t": 6421,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 21,
+          "api_status": "taking_off",
+          "api_height": 21
+        },
+        {
+          "t": 6559,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 21,
+          "api_status": "taking_off",
+          "api_height": 21
+        },
+        {
+          "t": 6714,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 21,
+          "api_status": "taking_off",
+          "api_height": 21
+        },
+        {
+          "t": 6874,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 22.5,
+          "api_status": "taking_off",
+          "api_height": 22.5
+        },
+        {
+          "t": 6995,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 22.5,
+          "api_status": "taking_off",
+          "api_height": 22.5
+        },
+        {
+          "t": 7129,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 22.5,
+          "api_status": "taking_off",
+          "api_height": 22.5
+        },
+        {
+          "t": 7253,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 22.5,
+          "api_status": "taking_off",
+          "api_height": 22.5
+        },
+        {
+          "t": 7393,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 24,
+          "api_status": "taking_off",
+          "api_height": 24
+        },
+        {
+          "t": 7522,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 24,
+          "api_status": "taking_off",
+          "api_height": 24
+        },
+        {
+          "t": 7633,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 24,
+          "api_status": "taking_off",
+          "api_height": 24
+        },
+        {
+          "t": 7759,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 24,
+          "api_status": "taking_off",
+          "api_height": 25.5
+        },
+        {
+          "t": 7889,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 25.5,
+          "api_status": "taking_off",
+          "api_height": 25.5
+        },
+        {
+          "t": 8002,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 25.5,
+          "api_status": "taking_off",
+          "api_height": 25.5
+        },
+        {
+          "t": 8110,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 25.5,
+          "api_status": "taking_off",
+          "api_height": 25.5
+        },
+        {
+          "t": 8224,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 25.5,
+          "api_status": "taking_off",
+          "api_height": 27
+        },
+        {
+          "t": 8347,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 27,
+          "api_status": "taking_off",
+          "api_height": 27
+        },
+        {
+          "t": 8463,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 27,
+          "api_status": "taking_off",
+          "api_height": 27
+        },
+        {
+          "t": 8572,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 27,
+          "api_status": "taking_off",
+          "api_height": 27
+        },
+        {
+          "t": 8693,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 27,
+          "api_status": "taking_off",
+          "api_height": 28.5
+        },
+        {
+          "t": 8823,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 28.5,
+          "api_status": "taking_off",
+          "api_height": 28.5
+        },
+        {
+          "t": 8938,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 28.5,
+          "api_status": "taking_off",
+          "api_height": 28.5
+        },
+        {
+          "t": 9063,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 28.5,
+          "api_status": "taking_off",
+          "api_height": 28.5
+        },
+        {
+          "t": 9189,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 30,
+          "api_status": "in_flight",
+          "api_height": 30
+        },
+        {
+          "t": 9323,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 30,
+          "api_status": "in_flight",
+          "api_height": 30
+        },
+        {
+          "t": 9439,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 30,
+          "api_status": "in_flight",
+          "api_height": 30
+        },
+        {
+          "t": 9552,
+          "ui_status": "taking_off",
+          "ui_row_status": "taking_off",
+          "ui_alt": 30,
+          "api_status": "in_flight",
+          "api_height": 30
+        },
+        {
+          "t": 9673,
+          "ui_status": "in_flight",
+          "ui_row_status": "in_flight",
+          "ui_alt": 30,
+          "api_status": "in_flight",
+          "api_height": 30
+        },
+        {
+          "t": 9795,
+          "ui_status": "in_flight",
+          "ui_row_status": "in_flight",
+          "ui_alt": 30,
+          "api_status": "in_flight",
+          "api_height": 30
+        }
+      ]
+    }
+  },
+  {
+    "label": "cruise",
+    "t": 11143,
+    "extra": {
+      "ui_hspeed": 10,
+      "ui": {
+        "telemetryHeader": "Drone Telemetry · Drone 1",
+        "videoHeader": "FPV · Drone 1",
+        "flightStatus": "in_flight",
+        "headingDeg": 47,
+        "altitudeM": 30,
+        "selectedRowIds": [
+          "drone-1"
+        ]
+      },
+      "ground_truth": {
+        "id": "drone-1",
+        "status": "in_flight",
+        "latitude": 18.561330666789846,
+        "longitude": 73.69443469059388,
+        "height": 30,
+        "heading": 47,
+        "battery": 99
+      }
+    }
+  },
+  {
+    "label": "end",
+    "t": 11310,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15582
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 0,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  }
+]

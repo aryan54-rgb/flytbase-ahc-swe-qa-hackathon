@@ -1,0 +1,240 @@
+{
+  "generated_at": "2026-09-26T10:18:16.474Z",
+  "capture": "bash submission/capture.sh (each scenario run individually, clean app, no mutation, no LLM provider)",
+  "scenarios": [
+    {
+      "scenario_id": "scenario-001",
+      "title": "Device List Integrity",
+      "user_goal": "As an operator I can see every simulated drone (with its dock) in the device list.",
+      "verdict": "PASS",
+      "status_reason": "all invariants held",
+      "video_filename": "videos/scenario-001-device-integrity.webm",
+      "video": {
+        "bytes": 141781,
+        "container": "matroska,webm",
+        "duration_s": 2.4,
+        "codec": "vp8",
+        "resolution": "1440x900",
+        "fps": 25
+      },
+      "voiceover_filename": "voiceover/scenario-001.md",
+      "voiceover_words": 55,
+      "voiceover_est_seconds": 22,
+      "evidence_directory": "evidence/scenario-001",
+      "result_file": "results/scenario-001-result.json",
+      "duration_ms": 2034,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "finding_count": 0,
+      "findings": [],
+      "baseline_status": "no findings",
+      "baseline_id": "2026-09-26T09-39-56-141Z",
+      "mutation": null,
+      "healing": "NOT_NEEDED",
+      "llm_provider": "none",
+      "warnings": [],
+      "started_at": "2026-09-26T10:12:51.768Z"
+    },
+    {
+      "scenario_id": "scenario-002",
+      "title": "Device Selection Synchronization",
+      "user_goal": "When I click another drone, the whole cockpit (list, telemetry, video) switches focus to it.",
+      "verdict": "PASS",
+      "status_reason": "all invariants held",
+      "video_filename": "videos/scenario-002-selection-sync.webm",
+      "video": {
+        "bytes": 248732,
+        "container": "matroska,webm",
+        "duration_s": 4.84,
+        "codec": "vp8",
+        "resolution": "1440x900",
+        "fps": 25
+      },
+      "voiceover_filename": "voiceover/scenario-002.md",
+      "voiceover_words": 62,
+      "voiceover_est_seconds": 25,
+      "evidence_directory": "evidence/scenario-002",
+      "result_file": "results/scenario-002-result.json",
+      "duration_ms": 5335,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "finding_count": 0,
+      "findings": [],
+      "baseline_status": "no findings",
+      "baseline_id": "2026-09-26T09-39-56-141Z",
+      "mutation": null,
+      "healing": "NOT_NEEDED",
+      "llm_provider": "none",
+      "warnings": [],
+      "started_at": "2026-09-26T10:12:56.692Z"
+    },
+    {
+      "scenario_id": "scenario-003",
+      "title": "375px Responsive Integrity",
+      "user_goal": "On a 375×667 phone viewport I can still read telemetry, pick a drone and use the map controls.",
+      "verdict": "DEFECT_FOUND",
+      "status_reason": "Interactive controls are reachable and receive the pointer: layout.pointer_reaches [testid:map-view-2d]: centre of map 2D button is covered by region:video-tile; 100% of sampled points covered; actionability probe: NOT_ACTIONABLE (intercepted)",
+      "video_filename": "videos/scenario-003-responsive-375.webm",
+      "video": {
+        "bytes": 468214,
+        "container": "matroska,webm",
+        "duration_s": 7.52,
+        "codec": "vp8",
+        "resolution": "374x666",
+        "fps": 25
+      },
+      "voiceover_filename": "voiceover/scenario-003.md",
+      "voiceover_words": 65,
+      "voiceover_est_seconds": 26,
+      "evidence_directory": "evidence/scenario-003",
+      "result_file": "results/scenario-003-result.json",
+      "duration_ms": 6948,
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "finding_count": 3,
+      "findings": [
+        {
+          "fingerprint": "2b098d9eeeff",
+          "check_id": "layout.pointer_reaches",
+          "target": "testid:map-view-2d",
+          "failure_type": "covered",
+          "baseline_state": "STABLE_BASELINE"
+        },
+        {
+          "fingerprint": "1e5be47648b9",
+          "check_id": "layout.pointer_reaches",
+          "target": "testid:map-view-3d",
+          "failure_type": "covered",
+          "baseline_state": "STABLE_BASELINE"
+        },
+        {
+          "fingerprint": "431994fde8de",
+          "check_id": "layout.no_overlap",
+          "target": "pair:region:video-tile|testid:map-view-toggle",
+          "failure_type": "overlap",
+          "baseline_state": "STABLE_BASELINE"
+        }
+      ],
+      "baseline_status": "3 STABLE_BASELINE, 0 NEW",
+      "baseline_id": "2026-09-26T09-39-56-141Z",
+      "mutation": null,
+      "healing": "NOT_NEEDED",
+      "llm_provider": "none",
+      "warnings": [],
+      "started_at": "2026-09-26T10:13:04.387Z"
+    },
+    {
+      "scenario_id": "scenario-004",
+      "title": "Cross-Tier Flight State Consistency",
+      "user_goal": "When a drone takes off, the cockpit shows the same flight status and altitude the simulator reports.",
+      "verdict": "PASS",
+      "status_reason": "all invariants held",
+      "video_filename": "videos/scenario-004-flight-consistency.webm",
+      "video": {
+        "bytes": 1413972,
+        "container": "matroska,webm",
+        "duration_s": 12.04,
+        "codec": "vp8",
+        "resolution": "1440x900",
+        "fps": 25
+      },
+      "voiceover_filename": "voiceover/scenario-004.md",
+      "voiceover_words": 63,
+      "voiceover_est_seconds": 25,
+      "evidence_directory": "evidence/scenario-004",
+      "result_file": "results/scenario-004-result.json",
+      "duration_ms": 11880,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "finding_count": 0,
+      "findings": [],
+      "baseline_status": "no findings",
+      "baseline_id": "2026-09-26T09-39-56-141Z",
+      "mutation": null,
+      "healing": "NOT_NEEDED",
+      "llm_provider": "none",
+      "warnings": [],
+      "started_at": "2026-09-26T10:13:13.808Z"
+    },
+    {
+      "scenario_id": "scenario-005",
+      "title": "Route Robustness",
+      "user_goal": "Typing or following an unknown URL never leaves me on a broken or blank screen.",
+      "verdict": "PASS",
+      "status_reason": "all invariants held",
+      "video_filename": "videos/scenario-005-route-robustness.webm",
+      "video": {
+        "bytes": 375299,
+        "container": "matroska,webm",
+        "duration_s": 3.8,
+        "codec": "vp8",
+        "resolution": "1440x900",
+        "fps": 25
+      },
+      "voiceover_filename": "voiceover/scenario-005.md",
+      "voiceover_words": 62,
+      "voiceover_est_seconds": 25,
+      "evidence_directory": "evidence/scenario-005",
+      "result_file": "results/scenario-005-result.json",
+      "duration_ms": 3461,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "finding_count": 0,
+      "findings": [],
+      "baseline_status": "no findings",
+      "baseline_id": "2026-09-26T09-39-56-141Z",
+      "mutation": null,
+      "healing": "NOT_NEEDED",
+      "llm_provider": "none",
+      "warnings": [],
+      "started_at": "2026-09-26T10:13:28.073Z"
+    },
+    {
+      "scenario_id": "scenario-006",
+      "title": "Map View Toggle Behaviour",
+      "user_goal": "I can switch the map between 2D (top-down) and 3D (oblique) and the map actually changes.",
+      "verdict": "PASS",
+      "status_reason": "all invariants held",
+      "video_filename": "videos/scenario-006-map-toggle.webm",
+      "video": {
+        "bytes": 1576284,
+        "container": "matroska,webm",
+        "duration_s": 11.64,
+        "codec": "vp8",
+        "resolution": "1440x900",
+        "fps": 25
+      },
+      "voiceover_filename": "voiceover/scenario-006.md",
+      "voiceover_words": 59,
+      "voiceover_est_seconds": 24,
+      "evidence_directory": "evidence/scenario-006",
+      "result_file": "results/scenario-006-result.json",
+      "duration_ms": 11624,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "finding_count": 0,
+      "findings": [],
+      "baseline_status": "no findings",
+      "baseline_id": "2026-09-26T09-39-56-141Z",
+      "mutation": null,
+      "healing": "NOT_NEEDED",
+      "llm_provider": "none",
+      "warnings": [
+        "[Initial map state is 3D] map.initial_camera_oblique [testid:map-canvas]: expected \"pitch -45° while 3D is selected\", got \"pitch -90° (top-down) at startup\""
+      ],
+      "started_at": "2026-09-26T10:13:33.856Z"
+    }
+  ]
+}

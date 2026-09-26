@@ -1,0 +1,721 @@
+{
+  "schema": "cockpit-qa/result@2",
+  "scenario": {
+    "id": "scenario-006",
+    "title": "Map View Toggle Behaviour",
+    "user_goal": "I can switch the map between 2D (top-down) and 3D (oblique) and the map actually changes.",
+    "starting_state": {
+      "description": "Simulator reset; cockpit at / (1440×900) with the map initialised and the home camera flight finished.",
+      "path": "/",
+      "simulator": "reset",
+      "waitForDevices": true
+    },
+    "steps": [
+      "Initial map state is 3D",
+      "Activate 2D",
+      "Activate 3D (restores oblique camera)",
+      "Activate 2D again (pitch must change from oblique)"
+    ],
+    "expected_behavior": [
+      "Initially 3D is selected (aria-pressed) and the map allows tilt.",
+      "Activating 2D makes the map top-down (pitch -90°) with tilt disabled, and 2D becomes the pressed button.",
+      "Activating 3D restores an oblique camera (pitch -45°) with tilt enabled, and 3D becomes the pressed button.",
+      "A click that is dispatched but does not change the map is a defect, whatever the button looks like."
+    ],
+    "invariant": "After activating mode m: runtime(tiltEnabled) == (m == 3D) && |camera.pitch - pitch(m)| <= 1° && aria-pressed(m) == true && aria-pressed(other) == false.",
+    "evidence_requirements": [
+      "recording",
+      "screenshot_on_failure",
+      "dom_on_failure",
+      "console",
+      "ground_truth",
+      "result"
+    ],
+    "tags": [
+      "level-1",
+      "interaction",
+      "map"
+    ]
+  },
+  "status": "PASS",
+  "status_reason": "all invariants held",
+  "findings": [],
+  "incident_count": 0,
+  "baseline_comparison": {
+    "baseline_id": "2026-09-26T09-39-56-141Z",
+    "known_stable": [],
+    "known_intermittent": [],
+    "new": [],
+    "masked": [],
+    "absent_intermittent": []
+  },
+  "started_at": "2026-09-26T10:13:33.856Z",
+  "finished_at": "2026-09-26T10:13:45.480Z",
+  "duration_ms": 11624,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "versions": {
+    "harness": {
+      "version": "0.1.0",
+      "source_hash": "d5a784687a20"
+    },
+    "app": {
+      "git_commit": "16db625db9c954d709acf5b25d4c24bb8c8e6eb1",
+      "git_branch": "main",
+      "product_dirty": true,
+      "dirty_files": [
+        "submission/"
+      ]
+    }
+  },
+  "environment": {
+    "cockpitUrl": "http://localhost:4010",
+    "apiUrl": "http://localhost:4000",
+    "browser": "chromium 153.0.8010.12",
+    "mutation": null
+  },
+  "warnings": [
+    "[Initial map state is 3D] map.initial_camera_oblique [testid:map-canvas]: expected \"pitch -45° while 3D is selected\", got \"pitch -90° (top-down) at startup\""
+  ],
+  "steps": [
+    {
+      "index": 1,
+      "name": "Starting state: cockpit renders the device list",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "app.device_list_rendered",
+          "target": "region:device-list",
+          "type": "blank",
+          "name": "app.device_list_rendered [region:device-list]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "message": "no device rows within 30000 ms while API reports 4 drones",
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    },
+    {
+      "index": 2,
+      "name": "Initial map state is 3D",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "map.camera_settled",
+          "target": "testid:map-canvas",
+          "type": "timeout",
+          "name": "map.camera_settled [testid:map-canvas]",
+          "phase": "action",
+          "passed": true,
+          "severity": "warn",
+          "expected": "camera at rest",
+          "actual": {
+            "observable": true,
+            "pitchDeg": -90,
+            "headingDeg": 360,
+            "heightM": 1500,
+            "tiltEnabled": true,
+            "sceneMode": 3,
+            "moving": false
+          },
+          "state": ""
+        },
+        {
+          "id": "map.initial_tilt_enabled",
+          "target": "testid:map-canvas",
+          "type": "mismatch",
+          "name": "map.initial_tilt_enabled [testid:map-canvas]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": true,
+          "actual": true,
+          "state": ""
+        },
+        {
+          "id": "map.aria_pressed_reflects_mode",
+          "target": "testid:map-view-3d",
+          "type": "mismatch",
+          "name": "map.aria_pressed_reflects_mode [testid:map-view-3d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "true",
+          "actual": "true",
+          "state": ""
+        },
+        {
+          "id": "map.aria_pressed_reflects_mode",
+          "target": "testid:map-view-2d",
+          "type": "mismatch",
+          "name": "map.aria_pressed_reflects_mode [testid:map-view-2d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "false",
+          "actual": "false",
+          "state": ""
+        },
+        {
+          "id": "map.initial_camera_oblique",
+          "target": "testid:map-canvas",
+          "type": "mismatch",
+          "name": "map.initial_camera_oblique [testid:map-canvas]",
+          "phase": "verify",
+          "passed": false,
+          "severity": "warn",
+          "expected": "pitch -45° while 3D is selected",
+          "actual": "pitch -90° (top-down) at startup",
+          "state": "pitch -45° while 3D is selected->pitch -90° (top-down) at startup"
+        }
+      ],
+      "duration_ms": 4463
+    },
+    {
+      "index": 3,
+      "name": "Activate 2D",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "interaction.action_executed",
+          "target": "testid:map-view-2d",
+          "type": "not_actionable",
+          "name": "interaction.action_executed [testid:map-view-2d]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "map.view_mode_applied",
+          "target": "testid:map-view-2d",
+          "type": "mismatch",
+          "name": "map.view_mode_applied [testid:map-view-2d]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "2D: tilt disabled, pitch -90±1°, camera at rest",
+          "actual": {
+            "tiltEnabled": false,
+            "pitchDeg": -90,
+            "moving": false
+          },
+          "state": ""
+        },
+        {
+          "id": "map.aria_pressed_reflects_mode",
+          "target": "testid:map-view-2d",
+          "type": "mismatch",
+          "name": "map.aria_pressed_reflects_mode [testid:map-view-2d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "true",
+          "actual": "true",
+          "state": ""
+        },
+        {
+          "id": "map.aria_pressed_reflects_mode",
+          "target": "testid:map-view-3d",
+          "type": "mismatch",
+          "name": "map.aria_pressed_reflects_mode [testid:map-view-3d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "false",
+          "actual": "false",
+          "state": ""
+        }
+      ],
+      "duration_ms": 1957,
+      "interaction_stage": "POSTCONDITION_SATISFIED"
+    },
+    {
+      "index": 4,
+      "name": "Activate 3D (restores oblique camera)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "interaction.action_executed",
+          "target": "testid:map-view-3d",
+          "type": "not_actionable",
+          "name": "interaction.action_executed [testid:map-view-3d]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "map.view_mode_applied",
+          "target": "testid:map-view-3d",
+          "type": "mismatch",
+          "name": "map.view_mode_applied [testid:map-view-3d]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "3D: tilt enabled, pitch -45±1°, camera at rest",
+          "actual": {
+            "tiltEnabled": true,
+            "pitchDeg": -45.01,
+            "moving": false
+          },
+          "state": ""
+        },
+        {
+          "id": "map.aria_pressed_reflects_mode",
+          "target": "testid:map-view-3d",
+          "type": "mismatch",
+          "name": "map.aria_pressed_reflects_mode [testid:map-view-3d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "true",
+          "actual": "true",
+          "state": ""
+        },
+        {
+          "id": "map.aria_pressed_reflects_mode",
+          "target": "testid:map-view-2d",
+          "type": "mismatch",
+          "name": "map.aria_pressed_reflects_mode [testid:map-view-2d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "false",
+          "actual": "false",
+          "state": ""
+        }
+      ],
+      "duration_ms": 1700,
+      "interaction_stage": "POSTCONDITION_SATISFIED"
+    },
+    {
+      "index": 5,
+      "name": "Activate 2D again (pitch must change from oblique)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "interaction.action_executed",
+          "target": "testid:map-view-2d",
+          "type": "not_actionable",
+          "name": "interaction.action_executed [testid:map-view-2d]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "state": ""
+        },
+        {
+          "id": "map.view_mode_applied",
+          "target": "testid:map-view-2d",
+          "type": "mismatch",
+          "name": "map.view_mode_applied [testid:map-view-2d]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "2D: tilt disabled, pitch -90±1°, camera at rest",
+          "actual": {
+            "tiltEnabled": false,
+            "pitchDeg": -90,
+            "moving": false
+          },
+          "state": ""
+        },
+        {
+          "id": "map.aria_pressed_reflects_mode",
+          "target": "testid:map-view-2d",
+          "type": "mismatch",
+          "name": "map.aria_pressed_reflects_mode [testid:map-view-2d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "true",
+          "actual": "true",
+          "state": ""
+        },
+        {
+          "id": "map.aria_pressed_reflects_mode",
+          "target": "testid:map-view-3d",
+          "type": "mismatch",
+          "name": "map.aria_pressed_reflects_mode [testid:map-view-3d]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "false",
+          "actual": "false",
+          "state": ""
+        }
+      ],
+      "duration_ms": 1819,
+      "interaction_stage": "POSTCONDITION_SATISFIED"
+    },
+    {
+      "index": 6,
+      "name": "Runtime health",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "runtime.no_uncaught_errors",
+          "target": "page",
+          "type": "uncaught_error",
+          "name": "runtime.no_uncaught_errors [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no uncaught exceptions",
+          "actual": [],
+          "state": ""
+        },
+        {
+          "id": "runtime.no_unexpected_dialogs",
+          "target": "page",
+          "type": "unexpected_dialog",
+          "name": "runtime.no_unexpected_dialogs [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no dialogs",
+          "actual": [],
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    }
+  ],
+  "runtime": {
+    "page_errors": 0,
+    "console_errors": 0,
+    "dialogs": 0,
+    "failed_requests": 0
+  },
+  "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\evidence\\scenario-006",
+  "evidence": {
+    "final": "final.png",
+    "recording": "recording.webm",
+    "console": "console.json",
+    "ground_truth": "ground_truth.json",
+    "result": "result.json"
+  },
+  "evidence_integrity": {
+    "required": [
+      "console.json",
+      "ground_truth.json",
+      "result.json"
+    ],
+    "missing": []
+  },
+  "healing": {
+    "summary": {
+      "total_actions": 7,
+      "deterministic": 7,
+      "healed_actions": 0,
+      "memory_hits": 0,
+      "memory_stale": 0,
+      "local_recoveries": 0,
+      "llm_calls": 0,
+      "llm_successes": 0,
+      "llm_latency_ms_total": 0,
+      "llm_tokens_total": 0,
+      "unresolved": 0,
+      "rejected": 0,
+      "target_absent": 0,
+      "healing_failures": 0,
+      "status": "NOT_NEEDED"
+    },
+    "provider": "none",
+    "model": null,
+    "actions": [
+      {
+        "scenario_id": "scenario-006",
+        "step": "Initial map state is 3D",
+        "step_id": "map-view-3d",
+        "intent": "Switch the map to the 3D view",
+        "original_target": "testid:map-view-3d",
+        "original_selector": "[data-testid=\"map-view-3d\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 21,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-006",
+        "step": "Activate 2D",
+        "step_id": "map-view-2d",
+        "intent": "Switch the map to the 2D view",
+        "original_target": "testid:map-view-2d",
+        "original_selector": "[data-testid=\"map-view-2d\"]",
+        "mode": "action",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 4,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "satisfied",
+        "clicks_dispatched": 1,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-006",
+        "step": "Activate 2D",
+        "step_id": "map-view-2d",
+        "intent": "Switch the map to the 2D view",
+        "original_target": "testid:map-view-2d",
+        "original_selector": "[data-testid=\"map-view-2d\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 664,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-006",
+        "step": "Activate 3D (restores oblique camera)",
+        "step_id": "map-view-3d",
+        "intent": "Switch the map to the 3D view",
+        "original_target": "testid:map-view-3d",
+        "original_selector": "[data-testid=\"map-view-3d\"]",
+        "mode": "action",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 22,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "satisfied",
+        "clicks_dispatched": 1,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-006",
+        "step": "Activate 3D (restores oblique camera)",
+        "step_id": "map-view-3d",
+        "intent": "Switch the map to the 3D view",
+        "original_target": "testid:map-view-3d",
+        "original_selector": "[data-testid=\"map-view-3d\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 28,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-006",
+        "step": "Activate 2D again (pitch must change from oblique)",
+        "step_id": "map-view-2d",
+        "intent": "Switch the map to the 2D view",
+        "original_target": "testid:map-view-2d",
+        "original_selector": "[data-testid=\"map-view-2d\"]",
+        "mode": "action",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 26,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "satisfied",
+        "clicks_dispatched": 1,
+        "reason": "known selector resolved"
+      },
+      {
+        "scenario_id": "scenario-006",
+        "step": "Activate 2D again (pitch must change from oblique)",
+        "step_id": "map-view-2d",
+        "intent": "Switch the map to the 2D view",
+        "original_target": "testid:map-view-2d",
+        "original_selector": "[data-testid=\"map-view-2d\"]",
+        "mode": "resolve",
+        "deterministic_attempt": true,
+        "deterministic_success": true,
+        "memory_lookup": false,
+        "memory_hit": false,
+        "memory_stale": false,
+        "local_recovery_attempt": false,
+        "local_recovery_success": false,
+        "llm_attempt": false,
+        "llm_success": false,
+        "llm_provider": null,
+        "llm_model": null,
+        "llm_latency_ms": null,
+        "llm_tokens": null,
+        "llm_reason": null,
+        "recovery_tier": "deterministic",
+        "recovery_confidence": null,
+        "confidence_level": null,
+        "recovery_latency_ms": 20,
+        "candidates_considered": 0,
+        "healed_signature": null,
+        "healed_description": null,
+        "outcome": "DETERMINISTIC",
+        "postcondition": "not-applicable",
+        "clicks_dispatched": 0,
+        "reason": "known selector resolved"
+      }
+    ]
+  }
+}

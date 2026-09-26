@@ -1,0 +1,446 @@
+[
+  {
+    "label": "preflight",
+    "t": 2,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15583
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 7,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "start",
+    "t": 45,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15583
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 7,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "route /",
+    "t": 391,
+    "extra": {
+      "url": "http://localhost:4010/",
+      "pathname": "/",
+      "rendered": true,
+      "rootChildren": 1,
+      "bodyTextLength": 338,
+      "hasHeader": true,
+      "xssFlag": null,
+      "reflected": false,
+      "leaked": false
+    }
+  },
+  {
+    "label": "route /admin",
+    "t": 1439,
+    "extra": {
+      "url": "http://localhost:4010/",
+      "pathname": "/",
+      "rendered": true,
+      "rootChildren": 1,
+      "bodyTextLength": 423,
+      "hasHeader": true,
+      "xssFlag": null,
+      "reflected": false,
+      "leaked": false
+    }
+  },
+  {
+    "label": "route /settings",
+    "t": 1698,
+    "extra": {
+      "url": "http://localhost:4010/",
+      "pathname": "/",
+      "rendered": true,
+      "rootChildren": 1,
+      "bodyTextLength": 423,
+      "hasHeader": true,
+      "xssFlag": null,
+      "reflected": false,
+      "leaked": false
+    }
+  },
+  {
+    "label": "route /dashboard",
+    "t": 1944,
+    "extra": {
+      "url": "http://localhost:4010/",
+      "pathname": "/",
+      "rendered": true,
+      "rootChildren": 1,
+      "bodyTextLength": 423,
+      "hasHeader": true,
+      "xssFlag": null,
+      "reflected": false,
+      "leaked": false
+    }
+  },
+  {
+    "label": "route /unauthorized",
+    "t": 2162,
+    "extra": {
+      "url": "http://localhost:4010/",
+      "pathname": "/",
+      "rendered": true,
+      "rootChildren": 1,
+      "bodyTextLength": 423,
+      "hasHeader": true,
+      "xssFlag": null,
+      "reflected": false,
+      "leaked": false
+    }
+  },
+  {
+    "label": "route /admin/users/42?tab=roles#danger",
+    "t": 2430,
+    "extra": {
+      "url": "http://localhost:4010/",
+      "pathname": "/",
+      "rendered": true,
+      "rootChildren": 1,
+      "bodyTextLength": 423,
+      "hasHeader": true,
+      "xssFlag": null,
+      "reflected": false,
+      "leaked": false
+    }
+  },
+  {
+    "label": "route /%2e%2e/%2e%2e/etc/passwd",
+    "t": 2654,
+    "extra": {
+      "url": "http://localhost:4010/",
+      "pathname": "/",
+      "rendered": true,
+      "rootChildren": 1,
+      "bodyTextLength": 423,
+      "hasHeader": true,
+      "xssFlag": null,
+      "reflected": false,
+      "leaked": false
+    }
+  },
+  {
+    "label": "route /<script>window.__qa_xss=1;alert(1)</script>",
+    "t": 2891,
+    "extra": {
+      "url": "http://localhost:4010/",
+      "pathname": "/",
+      "rendered": true,
+      "rootChildren": 1,
+      "bodyTextLength": 423,
+      "hasHeader": true,
+      "xssFlag": null,
+      "reflected": false,
+      "leaked": false
+    }
+  },
+  {
+    "label": "route /?q=<img src=x onerror=\"window.__qa_xss=1\">",
+    "t": 3018,
+    "extra": {
+      "url": "http://localhost:4010/?q=%3Cimg%20src=x%20onerror=%22window.__qa_xss=1%22%3E",
+      "pathname": "/",
+      "rendered": true,
+      "rootChildren": 1,
+      "bodyTextLength": 338,
+      "hasHeader": true,
+      "xssFlag": null,
+      "reflected": false,
+      "leaked": false
+    }
+  },
+  {
+    "label": "end",
+    "t": 3124,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15587
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 13,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  }
+]

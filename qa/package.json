@@ -1,0 +1,20 @@
+{
+  "name": "cockpit-qa",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Deterministic Level-1 QA engine for the FlytBase Live Incident Response Cockpit",
+  "type": "module",
+  "scripts": {
+    "qa": "tsx runner/run.ts",
+    "qa:list": "tsx runner/run.ts --list",
+    "qa:headed": "tsx runner/run.ts --headed",
+    "typecheck": "tsc --noEmit",
+    "install:browsers": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "playwright": "^1.55.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

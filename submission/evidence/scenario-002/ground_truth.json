@@ -1,0 +1,398 @@
+[
+  {
+    "label": "preflight",
+    "t": 2,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15554
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 11,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "start",
+    "t": 74,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15554
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 0,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "initial_selection",
+    "t": 1255,
+    "extra": {
+      "target": "drone-1",
+      "previous": null,
+      "converged": true,
+      "elapsedMs": 831,
+      "ui": {
+        "telemetryHeader": "Drone Telemetry · Drone 1",
+        "videoHeader": "FPV · Drone 1",
+        "flightStatus": "standby",
+        "headingDeg": 47,
+        "altitudeM": 0,
+        "selectedRowIds": [
+          "drone-1"
+        ]
+      },
+      "ground_truth": {
+        "id": "drone-1",
+        "status": "standby",
+        "latitude": 18.5613,
+        "longitude": 73.69439999999997,
+        "height": 0,
+        "heading": 47,
+        "battery": 100
+      }
+    }
+  },
+  {
+    "label": "after_click_selection",
+    "t": 2394,
+    "extra": {
+      "target": "drone-4",
+      "previous": "drone-1",
+      "converged": true,
+      "elapsedMs": 92,
+      "ui": {
+        "telemetryHeader": "Drone Telemetry · Drone 4",
+        "videoHeader": "FPV · Drone 4",
+        "flightStatus": "standby",
+        "headingDeg": 318,
+        "altitudeM": 0,
+        "selectedRowIds": [
+          "drone-4"
+        ]
+      },
+      "ground_truth": {
+        "id": "drone-4",
+        "status": "standby",
+        "latitude": 18.5612999520085,
+        "longitude": 73.69866900537875,
+        "height": 0,
+        "heading": 318,
+        "battery": 100
+      }
+    }
+  },
+  {
+    "label": "after_switch_back_selection",
+    "t": 3665,
+    "extra": {
+      "target": "drone-1",
+      "previous": "drone-4",
+      "converged": true,
+      "elapsedMs": 30,
+      "ui": {
+        "telemetryHeader": "Drone Telemetry · Drone 1",
+        "videoHeader": "FPV · Drone 1",
+        "flightStatus": "standby",
+        "headingDeg": 47,
+        "altitudeM": 0,
+        "selectedRowIds": [
+          "drone-1"
+        ]
+      },
+      "ground_truth": {
+        "id": "drone-1",
+        "status": "standby",
+        "latitude": 18.5613,
+        "longitude": 73.69439999999997,
+        "height": 0,
+        "heading": 47,
+        "battery": 100
+      }
+    }
+  },
+  {
+    "label": "end",
+    "t": 4112,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15556
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 8,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  }
+]

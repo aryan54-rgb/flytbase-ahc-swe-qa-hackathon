@@ -1,0 +1,499 @@
+{
+  "schema": "cockpit-qa/result@2",
+  "scenario": {
+    "id": "scenario-001",
+    "title": "Device List Integrity",
+    "user_goal": "As an operator I can see every simulated drone (with its dock) in the device list.",
+    "starting_state": {
+      "description": "Simulator reset and running with its stock fleet; cockpit freshly loaded at /.",
+      "path": "/",
+      "simulator": "reset",
+      "waitForDevices": true
+    },
+    "steps": [
+      "Fetch ground-truth inventory from GET /api/devices",
+      "Rendered device rows correspond 1:1 to API drones",
+      "Each row's visible flight status matches simulator state"
+    ],
+    "expected_behavior": [
+      "One device row per drone returned by GET /api/devices (docks are folded into their drone row, not listed separately).",
+      "Each row visibly shows its API drone name and its dock name.",
+      "No missing, extra, duplicated or invisible rows.",
+      "Each row's visible flight status matches the simulator state."
+    ],
+    "invariant": "set(UI device-row ids) == set(API drone ids) and every row shows its API name, dock name and simulator flight status.",
+    "evidence_requirements": [
+      "recording",
+      "screenshot_on_failure",
+      "dom_on_failure",
+      "console",
+      "ground_truth",
+      "result"
+    ],
+    "tags": [
+      "level-1",
+      "ground-truth",
+      "device-list"
+    ]
+  },
+  "status": "PASS",
+  "status_reason": "all invariants held",
+  "findings": [],
+  "incident_count": 0,
+  "baseline_comparison": {
+    "baseline_id": "2026-09-26T09-39-56-141Z",
+    "known_stable": [],
+    "known_intermittent": [],
+    "new": [],
+    "masked": [],
+    "absent_intermittent": []
+  },
+  "started_at": "2026-09-26T10:12:51.768Z",
+  "finished_at": "2026-09-26T10:12:53.802Z",
+  "duration_ms": 2034,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "versions": {
+    "harness": {
+      "version": "0.1.0",
+      "source_hash": "d5a784687a20"
+    },
+    "app": {
+      "git_commit": "16db625db9c954d709acf5b25d4c24bb8c8e6eb1",
+      "git_branch": "main",
+      "product_dirty": true,
+      "dirty_files": [
+        "submission/"
+      ]
+    }
+  },
+  "environment": {
+    "cockpitUrl": "http://localhost:4010",
+    "apiUrl": "http://localhost:4000",
+    "browser": "chromium 153.0.8010.12",
+    "mutation": null
+  },
+  "warnings": [],
+  "steps": [
+    {
+      "index": 1,
+      "name": "Starting state: cockpit renders the device list",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "app.device_list_rendered",
+          "target": "region:device-list",
+          "type": "blank",
+          "name": "app.device_list_rendered [region:device-list]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "message": "no device rows within 30000 ms while API reports 4 drones",
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    },
+    {
+      "index": 2,
+      "name": "Fetch ground-truth inventory from GET /api/devices",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "env.stock_fleet_size",
+          "target": "api:/api/devices",
+          "type": "mismatch",
+          "name": "env.stock_fleet_size [api:/api/devices]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "warn",
+          "expected": 4,
+          "actual": 4,
+          "message": "baseline expects 4 drones, API reports 4 (drones may have been added/removed)",
+          "state": ""
+        }
+      ],
+      "duration_ms": 5
+    },
+    {
+      "index": 3,
+      "name": "Rendered device rows correspond 1:1 to API drones",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "device_list.row_count",
+          "target": "region:device-list",
+          "type": "mismatch",
+          "name": "device_list.row_count [region:device-list]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": 4,
+          "actual": 4,
+          "state": ""
+        },
+        {
+          "id": "device_list.row_visible",
+          "target": "device:drone-1",
+          "type": "hidden",
+          "name": "device_list.row_visible [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "device_list.row_shows_name",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "device_list.row_shows_name [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 1",
+          "actual": [
+            "Drone 1",
+            "Dock 1",
+            "dock —",
+            "—"
+          ],
+          "state": ""
+        },
+        {
+          "id": "device_list.row_shows_dock",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "device_list.row_shows_dock [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Dock 1",
+          "actual": [
+            "Drone 1",
+            "Dock 1",
+            "dock —",
+            "—"
+          ],
+          "state": ""
+        },
+        {
+          "id": "device_list.row_visible",
+          "target": "device:drone-2",
+          "type": "hidden",
+          "name": "device_list.row_visible [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "device_list.row_shows_name",
+          "target": "device:drone-2",
+          "type": "mismatch",
+          "name": "device_list.row_shows_name [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 2",
+          "actual": [
+            "Drone 2",
+            "Dock 2",
+            "dock —",
+            "—"
+          ],
+          "state": ""
+        },
+        {
+          "id": "device_list.row_shows_dock",
+          "target": "device:drone-2",
+          "type": "mismatch",
+          "name": "device_list.row_shows_dock [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Dock 2",
+          "actual": [
+            "Drone 2",
+            "Dock 2",
+            "dock —",
+            "—"
+          ],
+          "state": ""
+        },
+        {
+          "id": "device_list.row_visible",
+          "target": "device:drone-3",
+          "type": "hidden",
+          "name": "device_list.row_visible [device:drone-3]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "device_list.row_shows_name",
+          "target": "device:drone-3",
+          "type": "mismatch",
+          "name": "device_list.row_shows_name [device:drone-3]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 3",
+          "actual": [
+            "Drone 3",
+            "Dock 3",
+            "dock —",
+            "—"
+          ],
+          "state": ""
+        },
+        {
+          "id": "device_list.row_shows_dock",
+          "target": "device:drone-3",
+          "type": "mismatch",
+          "name": "device_list.row_shows_dock [device:drone-3]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Dock 3",
+          "actual": [
+            "Drone 3",
+            "Dock 3",
+            "dock —",
+            "—"
+          ],
+          "state": ""
+        },
+        {
+          "id": "device_list.row_visible",
+          "target": "device:drone-4",
+          "type": "hidden",
+          "name": "device_list.row_visible [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "visible",
+          "actual": "hidden",
+          "state": ""
+        },
+        {
+          "id": "device_list.row_shows_name",
+          "target": "device:drone-4",
+          "type": "mismatch",
+          "name": "device_list.row_shows_name [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Drone 4",
+          "actual": [
+            "Drone 4",
+            "Dock 4",
+            "dock —",
+            "—"
+          ],
+          "state": ""
+        },
+        {
+          "id": "device_list.row_shows_dock",
+          "target": "device:drone-4",
+          "type": "mismatch",
+          "name": "device_list.row_shows_dock [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "Dock 4",
+          "actual": [
+            "Drone 4",
+            "Dock 4",
+            "dock —",
+            "—"
+          ],
+          "state": ""
+        }
+      ],
+      "duration_ms": 20
+    },
+    {
+      "index": 4,
+      "name": "Each row's visible flight status matches simulator state",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "device_list.row_status_matches_sim",
+          "target": "device:drone-1",
+          "type": "mismatch",
+          "name": "device_list.row_status_matches_sim [device:drone-1]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "standby",
+          "actual": "standby",
+          "state": ""
+        },
+        {
+          "id": "device_list.row_status_matches_sim",
+          "target": "device:drone-2",
+          "type": "mismatch",
+          "name": "device_list.row_status_matches_sim [device:drone-2]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "standby",
+          "actual": "standby",
+          "state": ""
+        },
+        {
+          "id": "device_list.row_status_matches_sim",
+          "target": "device:drone-3",
+          "type": "mismatch",
+          "name": "device_list.row_status_matches_sim [device:drone-3]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "standby",
+          "actual": "standby",
+          "state": ""
+        },
+        {
+          "id": "device_list.row_status_matches_sim",
+          "target": "device:drone-4",
+          "type": "mismatch",
+          "name": "device_list.row_status_matches_sim [device:drone-4]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "standby",
+          "actual": "standby",
+          "state": ""
+        }
+      ],
+      "duration_ms": 825
+    },
+    {
+      "index": 5,
+      "name": "Runtime health",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "runtime.no_uncaught_errors",
+          "target": "page",
+          "type": "uncaught_error",
+          "name": "runtime.no_uncaught_errors [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no uncaught exceptions",
+          "actual": [],
+          "state": ""
+        },
+        {
+          "id": "runtime.no_unexpected_dialogs",
+          "target": "page",
+          "type": "unexpected_dialog",
+          "name": "runtime.no_unexpected_dialogs [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no dialogs",
+          "actual": [],
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    }
+  ],
+  "runtime": {
+    "page_errors": 0,
+    "console_errors": 0,
+    "dialogs": 0,
+    "failed_requests": 0
+  },
+  "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\evidence\\scenario-001",
+  "evidence": {
+    "final": "final.png",
+    "recording": "recording.webm",
+    "console": "console.json",
+    "ground_truth": "ground_truth.json",
+    "result": "result.json"
+  },
+  "evidence_integrity": {
+    "required": [
+      "console.json",
+      "ground_truth.json",
+      "result.json"
+    ],
+    "missing": []
+  },
+  "healing": {
+    "summary": {
+      "total_actions": 0,
+      "deterministic": 0,
+      "healed_actions": 0,
+      "memory_hits": 0,
+      "memory_stale": 0,
+      "local_recoveries": 0,
+      "llm_calls": 0,
+      "llm_successes": 0,
+      "llm_latency_ms_total": 0,
+      "llm_tokens_total": 0,
+      "unresolved": 0,
+      "rejected": 0,
+      "target_absent": 0,
+      "healing_failures": 0,
+      "status": "NOT_NEEDED"
+    },
+    "provider": "none",
+    "model": null,
+    "actions": []
+  }
+}

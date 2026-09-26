@@ -1,0 +1,378 @@
+[
+  {
+    "label": "preflight",
+    "t": 2,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15590
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 19,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "start",
+    "t": 64,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15590
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 0,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  },
+  {
+    "label": "map_initial",
+    "t": 4568,
+    "extra": {
+      "runtime": {
+        "observable": true,
+        "pitchDeg": -90,
+        "headingDeg": 360,
+        "heightM": 1500,
+        "tiltEnabled": true,
+        "sceneMode": 3,
+        "moving": false
+      },
+      "settle_ms": 2816
+    }
+  },
+  {
+    "label": "map_Activate 2D",
+    "t": 5480,
+    "extra": {
+      "stage": "POSTCONDITION_SATISFIED",
+      "runtime": {
+        "observable": true,
+        "pitchDeg": -90,
+        "headingDeg": 360,
+        "heightM": 1500,
+        "tiltEnabled": false,
+        "sceneMode": 3,
+        "moving": false
+      },
+      "healing": "DETERMINISTIC"
+    }
+  },
+  {
+    "label": "map_Activate 3D (restores oblique camera)",
+    "t": 8052,
+    "extra": {
+      "stage": "POSTCONDITION_SATISFIED",
+      "runtime": {
+        "observable": true,
+        "pitchDeg": -45.01,
+        "headingDeg": 360,
+        "heightM": 1212,
+        "tiltEnabled": true,
+        "sceneMode": 3,
+        "moving": false
+      },
+      "healing": "DETERMINISTIC"
+    }
+  },
+  {
+    "label": "map_Activate 2D again (pitch must change from oblique)",
+    "t": 9981,
+    "extra": {
+      "stage": "POSTCONDITION_SATISFIED",
+      "runtime": {
+        "observable": true,
+        "pitchDeg": -90,
+        "headingDeg": 360,
+        "heightM": 1500,
+        "tiltEnabled": false,
+        "sceneMode": 3,
+        "moving": false
+      },
+      "healing": "DETERMINISTIC"
+    }
+  },
+  {
+    "label": "end",
+    "t": 10874,
+    "health": {
+      "status": "ok",
+      "simulator": "connected",
+      "video": "up",
+      "uptime": 15601
+    },
+    "devices": [
+      {
+        "id": "dock-1",
+        "type": "dock",
+        "name": "Dock 1",
+        "droneId": "drone-1"
+      },
+      {
+        "id": "dock-2",
+        "type": "dock",
+        "name": "Dock 2",
+        "droneId": "drone-2"
+      },
+      {
+        "id": "dock-3",
+        "type": "dock",
+        "name": "Dock 3",
+        "droneId": "drone-3"
+      },
+      {
+        "id": "dock-4",
+        "type": "dock",
+        "name": "Dock 4",
+        "droneId": "drone-4"
+      },
+      {
+        "id": "drone-1",
+        "type": "drone",
+        "name": "Drone 1",
+        "dockId": "dock-1"
+      },
+      {
+        "id": "drone-2",
+        "type": "drone",
+        "name": "Drone 2",
+        "dockId": "dock-2"
+      },
+      {
+        "id": "drone-3",
+        "type": "drone",
+        "name": "Drone 3",
+        "dockId": "dock-3"
+      },
+      {
+        "id": "drone-4",
+        "type": "drone",
+        "name": "Drone 4",
+        "dockId": "dock-4"
+      }
+    ],
+    "state": {
+      "running": true,
+      "speed": 1,
+      "tick": 23,
+      "drones": {
+        "drone-1": {
+          "id": "drone-1",
+          "status": "standby",
+          "latitude": 18.5613,
+          "longitude": 73.69439999999997,
+          "height": 0,
+          "heading": 47,
+          "battery": 100
+        },
+        "drone-2": {
+          "id": "drone-2",
+          "status": "standby",
+          "latitude": 18.561299994667607,
+          "longitude": 73.6958230017932,
+          "height": 0,
+          "heading": 134,
+          "battery": 100
+        },
+        "drone-3": {
+          "id": "drone-3",
+          "status": "standby",
+          "latitude": 18.56129997867044,
+          "longitude": 73.69724600358609,
+          "height": 0,
+          "heading": 232,
+          "battery": 100
+        },
+        "drone-4": {
+          "id": "drone-4",
+          "status": "standby",
+          "latitude": 18.5612999520085,
+          "longitude": 73.69866900537875,
+          "height": 0,
+          "heading": 318,
+          "battery": 100
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,1234 @@
+{
+  "schema": "cockpit-qa/result@2",
+  "scenario": {
+    "id": "scenario-005",
+    "title": "Route Robustness",
+    "user_goal": "Typing or following an unknown URL never leaves me on a broken or blank screen.",
+    "starting_state": {
+      "description": "Simulator as-is (read-only scenario). Each step opens a fresh navigation to one probe path.",
+      "path": null,
+      "simulator": "as-is",
+      "waitForDevices": false
+    },
+    "steps": [
+      "GET /  (control: the mapped route)",
+      "GET /admin  (common privileged path)",
+      "GET /settings  (common app path)",
+      "GET /dashboard  (exists on the backend (:4000), must not exist on the cockpit (:4010))",
+      "GET /unauthorized  (auth-sounding path (no auth exists))",
+      "GET /admin/users/42?tab=roles#danger  (nested path with query and hash)",
+      "GET /%2e%2e/%2e%2e/etc/passwd  (encoded path traversal)",
+      "GET /<script>window.__qa_xss=1;alert(1)</script>  (script in path)",
+      "GET /?q=<img src=x onerror=\"window.__qa_xss=1\">  (script in query string)"
+    ],
+    "expected_behavior": [
+      "Every probe path returns a document (no 4xx/5xx from the cockpit server).",
+      "The router catch-all replaces any unmapped path with \"/\".",
+      "The cockpit renders fully (header, device list) — never a blank #root.",
+      "No uncaught exceptions; no script or markup from the URL executes or is reflected."
+    ],
+    "invariant": "For every path p: status(p) < 400 && finalPath(p) == \"/\" && cockpitRendered && !scriptExecuted && !reflected.",
+    "evidence_requirements": [
+      "recording",
+      "screenshot_on_failure",
+      "dom_on_failure",
+      "console",
+      "ground_truth",
+      "result"
+    ],
+    "tags": [
+      "level-1",
+      "routing",
+      "security"
+    ],
+    "independent_steps": true
+  },
+  "status": "PASS",
+  "status_reason": "all invariants held",
+  "findings": [],
+  "incident_count": 0,
+  "baseline_comparison": {
+    "baseline_id": "2026-09-26T09-39-56-141Z",
+    "known_stable": [],
+    "known_intermittent": [],
+    "new": [],
+    "masked": [],
+    "absent_intermittent": []
+  },
+  "started_at": "2026-09-26T10:13:28.073Z",
+  "finished_at": "2026-09-26T10:13:31.534Z",
+  "duration_ms": 3461,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "versions": {
+    "harness": {
+      "version": "0.1.0",
+      "source_hash": "d5a784687a20"
+    },
+    "app": {
+      "git_commit": "16db625db9c954d709acf5b25d4c24bb8c8e6eb1",
+      "git_branch": "main",
+      "product_dirty": true,
+      "dirty_files": [
+        "submission/"
+      ]
+    }
+  },
+  "environment": {
+    "cockpitUrl": "http://localhost:4010",
+    "apiUrl": "http://localhost:4000",
+    "browser": "chromium 153.0.8010.12",
+    "mutation": null
+  },
+  "warnings": [],
+  "steps": [
+    {
+      "index": 1,
+      "name": "GET /  (control: the mapped route)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "route.document_served",
+          "target": "route:/",
+          "type": "http_error",
+          "name": "route.document_served [route:/]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "< 400",
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "route.catch_all_redirects_home",
+          "target": "route:/",
+          "type": "wrong_route",
+          "name": "route.catch_all_redirects_home [route:/]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "/",
+          "actual": "/",
+          "state": ""
+        },
+        {
+          "id": "route.app_not_blank",
+          "target": "route:/",
+          "type": "blank",
+          "name": "route.app_not_blank [route:/]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "non-empty #root",
+          "actual": {
+            "rootChildren": 1,
+            "bodyTextLength": 338
+          },
+          "state": ""
+        },
+        {
+          "id": "route.shell_rendered",
+          "target": "route:/",
+          "type": "missing",
+          "name": "route.shell_rendered [route:/]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "header present",
+          "actual": "no header",
+          "state": ""
+        },
+        {
+          "id": "route.device_list_rendered",
+          "target": "route:/",
+          "type": "blank",
+          "name": "route.device_list_rendered [route:/]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "state": ""
+        },
+        {
+          "id": "route.no_script_execution",
+          "target": "route:/",
+          "type": "script_executed",
+          "name": "route.no_script_execution [route:/]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no __qa_xss flag, no dialog",
+          "actual": {
+            "xssFlag": null,
+            "dialogs": []
+          },
+          "state": ""
+        },
+        {
+          "id": "route.no_reflection",
+          "target": "route:/",
+          "type": "reflected",
+          "name": "route.no_reflection [route:/]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "payload token absent from DOM",
+          "actual": "token present in DOM",
+          "state": ""
+        },
+        {
+          "id": "route.no_file_leak",
+          "target": "route:/",
+          "type": "leak",
+          "name": "route.no_file_leak [route:/]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no /etc/passwd content",
+          "actual": "passwd content in DOM",
+          "state": ""
+        }
+      ],
+      "duration_ms": 241
+    },
+    {
+      "index": 2,
+      "name": "GET /admin  (common privileged path)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "route.document_served",
+          "target": "route:/admin",
+          "type": "http_error",
+          "name": "route.document_served [route:/admin]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "< 400",
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "route.catch_all_redirects_home",
+          "target": "route:/admin",
+          "type": "wrong_route",
+          "name": "route.catch_all_redirects_home [route:/admin]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "/",
+          "actual": "/",
+          "state": ""
+        },
+        {
+          "id": "route.app_not_blank",
+          "target": "route:/admin",
+          "type": "blank",
+          "name": "route.app_not_blank [route:/admin]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "non-empty #root",
+          "actual": {
+            "rootChildren": 1,
+            "bodyTextLength": 423
+          },
+          "state": ""
+        },
+        {
+          "id": "route.shell_rendered",
+          "target": "route:/admin",
+          "type": "missing",
+          "name": "route.shell_rendered [route:/admin]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "header present",
+          "actual": "no header",
+          "state": ""
+        },
+        {
+          "id": "route.device_list_rendered",
+          "target": "route:/admin",
+          "type": "blank",
+          "name": "route.device_list_rendered [route:/admin]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "state": ""
+        },
+        {
+          "id": "route.no_script_execution",
+          "target": "route:/admin",
+          "type": "script_executed",
+          "name": "route.no_script_execution [route:/admin]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no __qa_xss flag, no dialog",
+          "actual": {
+            "xssFlag": null,
+            "dialogs": []
+          },
+          "state": ""
+        },
+        {
+          "id": "route.no_reflection",
+          "target": "route:/admin",
+          "type": "reflected",
+          "name": "route.no_reflection [route:/admin]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "payload token absent from DOM",
+          "actual": "token present in DOM",
+          "state": ""
+        },
+        {
+          "id": "route.no_file_leak",
+          "target": "route:/admin",
+          "type": "leak",
+          "name": "route.no_file_leak [route:/admin]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no /etc/passwd content",
+          "actual": "passwd content in DOM",
+          "state": ""
+        }
+      ],
+      "duration_ms": 1048
+    },
+    {
+      "index": 3,
+      "name": "GET /settings  (common app path)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "route.document_served",
+          "target": "route:/settings",
+          "type": "http_error",
+          "name": "route.document_served [route:/settings]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "< 400",
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "route.catch_all_redirects_home",
+          "target": "route:/settings",
+          "type": "wrong_route",
+          "name": "route.catch_all_redirects_home [route:/settings]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "/",
+          "actual": "/",
+          "state": ""
+        },
+        {
+          "id": "route.app_not_blank",
+          "target": "route:/settings",
+          "type": "blank",
+          "name": "route.app_not_blank [route:/settings]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "non-empty #root",
+          "actual": {
+            "rootChildren": 1,
+            "bodyTextLength": 423
+          },
+          "state": ""
+        },
+        {
+          "id": "route.shell_rendered",
+          "target": "route:/settings",
+          "type": "missing",
+          "name": "route.shell_rendered [route:/settings]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "header present",
+          "actual": "no header",
+          "state": ""
+        },
+        {
+          "id": "route.device_list_rendered",
+          "target": "route:/settings",
+          "type": "blank",
+          "name": "route.device_list_rendered [route:/settings]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "state": ""
+        },
+        {
+          "id": "route.no_script_execution",
+          "target": "route:/settings",
+          "type": "script_executed",
+          "name": "route.no_script_execution [route:/settings]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no __qa_xss flag, no dialog",
+          "actual": {
+            "xssFlag": null,
+            "dialogs": []
+          },
+          "state": ""
+        },
+        {
+          "id": "route.no_reflection",
+          "target": "route:/settings",
+          "type": "reflected",
+          "name": "route.no_reflection [route:/settings]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "payload token absent from DOM",
+          "actual": "token present in DOM",
+          "state": ""
+        },
+        {
+          "id": "route.no_file_leak",
+          "target": "route:/settings",
+          "type": "leak",
+          "name": "route.no_file_leak [route:/settings]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no /etc/passwd content",
+          "actual": "passwd content in DOM",
+          "state": ""
+        }
+      ],
+      "duration_ms": 259
+    },
+    {
+      "index": 4,
+      "name": "GET /dashboard  (exists on the backend (:4000), must not exist on the cockpit (:4010))",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "route.document_served",
+          "target": "route:/dashboard",
+          "type": "http_error",
+          "name": "route.document_served [route:/dashboard]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "< 400",
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "route.catch_all_redirects_home",
+          "target": "route:/dashboard",
+          "type": "wrong_route",
+          "name": "route.catch_all_redirects_home [route:/dashboard]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "/",
+          "actual": "/",
+          "state": ""
+        },
+        {
+          "id": "route.app_not_blank",
+          "target": "route:/dashboard",
+          "type": "blank",
+          "name": "route.app_not_blank [route:/dashboard]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "non-empty #root",
+          "actual": {
+            "rootChildren": 1,
+            "bodyTextLength": 423
+          },
+          "state": ""
+        },
+        {
+          "id": "route.shell_rendered",
+          "target": "route:/dashboard",
+          "type": "missing",
+          "name": "route.shell_rendered [route:/dashboard]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "header present",
+          "actual": "no header",
+          "state": ""
+        },
+        {
+          "id": "route.device_list_rendered",
+          "target": "route:/dashboard",
+          "type": "blank",
+          "name": "route.device_list_rendered [route:/dashboard]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "state": ""
+        },
+        {
+          "id": "route.no_script_execution",
+          "target": "route:/dashboard",
+          "type": "script_executed",
+          "name": "route.no_script_execution [route:/dashboard]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no __qa_xss flag, no dialog",
+          "actual": {
+            "xssFlag": null,
+            "dialogs": []
+          },
+          "state": ""
+        },
+        {
+          "id": "route.no_reflection",
+          "target": "route:/dashboard",
+          "type": "reflected",
+          "name": "route.no_reflection [route:/dashboard]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "payload token absent from DOM",
+          "actual": "token present in DOM",
+          "state": ""
+        },
+        {
+          "id": "route.no_file_leak",
+          "target": "route:/dashboard",
+          "type": "leak",
+          "name": "route.no_file_leak [route:/dashboard]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no /etc/passwd content",
+          "actual": "passwd content in DOM",
+          "state": ""
+        }
+      ],
+      "duration_ms": 246
+    },
+    {
+      "index": 5,
+      "name": "GET /unauthorized  (auth-sounding path (no auth exists))",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "route.document_served",
+          "target": "route:/unauthorized",
+          "type": "http_error",
+          "name": "route.document_served [route:/unauthorized]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "< 400",
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "route.catch_all_redirects_home",
+          "target": "route:/unauthorized",
+          "type": "wrong_route",
+          "name": "route.catch_all_redirects_home [route:/unauthorized]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "/",
+          "actual": "/",
+          "state": ""
+        },
+        {
+          "id": "route.app_not_blank",
+          "target": "route:/unauthorized",
+          "type": "blank",
+          "name": "route.app_not_blank [route:/unauthorized]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "non-empty #root",
+          "actual": {
+            "rootChildren": 1,
+            "bodyTextLength": 423
+          },
+          "state": ""
+        },
+        {
+          "id": "route.shell_rendered",
+          "target": "route:/unauthorized",
+          "type": "missing",
+          "name": "route.shell_rendered [route:/unauthorized]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "header present",
+          "actual": "no header",
+          "state": ""
+        },
+        {
+          "id": "route.device_list_rendered",
+          "target": "route:/unauthorized",
+          "type": "blank",
+          "name": "route.device_list_rendered [route:/unauthorized]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "state": ""
+        },
+        {
+          "id": "route.no_script_execution",
+          "target": "route:/unauthorized",
+          "type": "script_executed",
+          "name": "route.no_script_execution [route:/unauthorized]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no __qa_xss flag, no dialog",
+          "actual": {
+            "xssFlag": null,
+            "dialogs": []
+          },
+          "state": ""
+        },
+        {
+          "id": "route.no_reflection",
+          "target": "route:/unauthorized",
+          "type": "reflected",
+          "name": "route.no_reflection [route:/unauthorized]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "payload token absent from DOM",
+          "actual": "token present in DOM",
+          "state": ""
+        },
+        {
+          "id": "route.no_file_leak",
+          "target": "route:/unauthorized",
+          "type": "leak",
+          "name": "route.no_file_leak [route:/unauthorized]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no /etc/passwd content",
+          "actual": "passwd content in DOM",
+          "state": ""
+        }
+      ],
+      "duration_ms": 218
+    },
+    {
+      "index": 6,
+      "name": "GET /admin/users/42?tab=roles#danger  (nested path with query and hash)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "route.document_served",
+          "target": "route:/admin/users/42?tab=roles#danger",
+          "type": "http_error",
+          "name": "route.document_served [route:/admin/users/42?tab=roles#danger]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "< 400",
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "route.catch_all_redirects_home",
+          "target": "route:/admin/users/42?tab=roles#danger",
+          "type": "wrong_route",
+          "name": "route.catch_all_redirects_home [route:/admin/users/42?tab=roles#danger]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "/",
+          "actual": "/",
+          "state": ""
+        },
+        {
+          "id": "route.app_not_blank",
+          "target": "route:/admin/users/42?tab=roles#danger",
+          "type": "blank",
+          "name": "route.app_not_blank [route:/admin/users/42?tab=roles#danger]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "non-empty #root",
+          "actual": {
+            "rootChildren": 1,
+            "bodyTextLength": 423
+          },
+          "state": ""
+        },
+        {
+          "id": "route.shell_rendered",
+          "target": "route:/admin/users/42?tab=roles#danger",
+          "type": "missing",
+          "name": "route.shell_rendered [route:/admin/users/42?tab=roles#danger]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "header present",
+          "actual": "no header",
+          "state": ""
+        },
+        {
+          "id": "route.device_list_rendered",
+          "target": "route:/admin/users/42?tab=roles#danger",
+          "type": "blank",
+          "name": "route.device_list_rendered [route:/admin/users/42?tab=roles#danger]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "state": ""
+        },
+        {
+          "id": "route.no_script_execution",
+          "target": "route:/admin/users/42?tab=roles#danger",
+          "type": "script_executed",
+          "name": "route.no_script_execution [route:/admin/users/42?tab=roles#danger]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no __qa_xss flag, no dialog",
+          "actual": {
+            "xssFlag": null,
+            "dialogs": []
+          },
+          "state": ""
+        },
+        {
+          "id": "route.no_reflection",
+          "target": "route:/admin/users/42?tab=roles#danger",
+          "type": "reflected",
+          "name": "route.no_reflection [route:/admin/users/42?tab=roles#danger]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "payload token absent from DOM",
+          "actual": "token present in DOM",
+          "state": ""
+        },
+        {
+          "id": "route.no_file_leak",
+          "target": "route:/admin/users/42?tab=roles#danger",
+          "type": "leak",
+          "name": "route.no_file_leak [route:/admin/users/42?tab=roles#danger]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no /etc/passwd content",
+          "actual": "passwd content in DOM",
+          "state": ""
+        }
+      ],
+      "duration_ms": 268
+    },
+    {
+      "index": 7,
+      "name": "GET /%2e%2e/%2e%2e/etc/passwd  (encoded path traversal)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "route.document_served",
+          "target": "route:/%2e%2e/%2e%2e/etc/passwd",
+          "type": "http_error",
+          "name": "route.document_served [route:/%2e%2e/%2e%2e/etc/passwd]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "< 400",
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "route.catch_all_redirects_home",
+          "target": "route:/%2e%2e/%2e%2e/etc/passwd",
+          "type": "wrong_route",
+          "name": "route.catch_all_redirects_home [route:/%2e%2e/%2e%2e/etc/passwd]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "/",
+          "actual": "/",
+          "state": ""
+        },
+        {
+          "id": "route.app_not_blank",
+          "target": "route:/%2e%2e/%2e%2e/etc/passwd",
+          "type": "blank",
+          "name": "route.app_not_blank [route:/%2e%2e/%2e%2e/etc/passwd]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "non-empty #root",
+          "actual": {
+            "rootChildren": 1,
+            "bodyTextLength": 423
+          },
+          "state": ""
+        },
+        {
+          "id": "route.shell_rendered",
+          "target": "route:/%2e%2e/%2e%2e/etc/passwd",
+          "type": "missing",
+          "name": "route.shell_rendered [route:/%2e%2e/%2e%2e/etc/passwd]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "header present",
+          "actual": "no header",
+          "state": ""
+        },
+        {
+          "id": "route.device_list_rendered",
+          "target": "route:/%2e%2e/%2e%2e/etc/passwd",
+          "type": "blank",
+          "name": "route.device_list_rendered [route:/%2e%2e/%2e%2e/etc/passwd]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "state": ""
+        },
+        {
+          "id": "route.no_script_execution",
+          "target": "route:/%2e%2e/%2e%2e/etc/passwd",
+          "type": "script_executed",
+          "name": "route.no_script_execution [route:/%2e%2e/%2e%2e/etc/passwd]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no __qa_xss flag, no dialog",
+          "actual": {
+            "xssFlag": null,
+            "dialogs": []
+          },
+          "state": ""
+        },
+        {
+          "id": "route.no_reflection",
+          "target": "route:/%2e%2e/%2e%2e/etc/passwd",
+          "type": "reflected",
+          "name": "route.no_reflection [route:/%2e%2e/%2e%2e/etc/passwd]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "payload token absent from DOM",
+          "actual": "token present in DOM",
+          "state": ""
+        },
+        {
+          "id": "route.no_file_leak",
+          "target": "route:/%2e%2e/%2e%2e/etc/passwd",
+          "type": "leak",
+          "name": "route.no_file_leak [route:/%2e%2e/%2e%2e/etc/passwd]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no /etc/passwd content",
+          "actual": "passwd content in DOM",
+          "state": ""
+        }
+      ],
+      "duration_ms": 224
+    },
+    {
+      "index": 8,
+      "name": "GET /<script>window.__qa_xss=1;alert(1)</script>  (script in path)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "route.document_served",
+          "target": "route:/<script>window.__qa_xss=1;alert(1)</script>",
+          "type": "http_error",
+          "name": "route.document_served [route:/<script>window.__qa_xss=1;alert(1)</script>]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "< 400",
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "route.catch_all_redirects_home",
+          "target": "route:/<script>window.__qa_xss=1;alert(1)</script>",
+          "type": "wrong_route",
+          "name": "route.catch_all_redirects_home [route:/<script>window.__qa_xss=1;alert(1)</script>]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "/",
+          "actual": "/",
+          "state": ""
+        },
+        {
+          "id": "route.app_not_blank",
+          "target": "route:/<script>window.__qa_xss=1;alert(1)</script>",
+          "type": "blank",
+          "name": "route.app_not_blank [route:/<script>window.__qa_xss=1;alert(1)</script>]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "non-empty #root",
+          "actual": {
+            "rootChildren": 1,
+            "bodyTextLength": 423
+          },
+          "state": ""
+        },
+        {
+          "id": "route.shell_rendered",
+          "target": "route:/<script>window.__qa_xss=1;alert(1)</script>",
+          "type": "missing",
+          "name": "route.shell_rendered [route:/<script>window.__qa_xss=1;alert(1)</script>]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "header present",
+          "actual": "no header",
+          "state": ""
+        },
+        {
+          "id": "route.device_list_rendered",
+          "target": "route:/<script>window.__qa_xss=1;alert(1)</script>",
+          "type": "blank",
+          "name": "route.device_list_rendered [route:/<script>window.__qa_xss=1;alert(1)</script>]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "state": ""
+        },
+        {
+          "id": "route.no_script_execution",
+          "target": "route:/<script>window.__qa_xss=1;alert(1)</script>",
+          "type": "script_executed",
+          "name": "route.no_script_execution [route:/<script>window.__qa_xss=1;alert(1)</script>]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no __qa_xss flag, no dialog",
+          "actual": {
+            "xssFlag": null,
+            "dialogs": []
+          },
+          "state": ""
+        },
+        {
+          "id": "route.no_reflection",
+          "target": "route:/<script>window.__qa_xss=1;alert(1)</script>",
+          "type": "reflected",
+          "name": "route.no_reflection [route:/<script>window.__qa_xss=1;alert(1)</script>]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "payload token absent from DOM",
+          "actual": "token present in DOM",
+          "state": ""
+        },
+        {
+          "id": "route.no_file_leak",
+          "target": "route:/<script>window.__qa_xss=1;alert(1)</script>",
+          "type": "leak",
+          "name": "route.no_file_leak [route:/<script>window.__qa_xss=1;alert(1)</script>]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no /etc/passwd content",
+          "actual": "passwd content in DOM",
+          "state": ""
+        }
+      ],
+      "duration_ms": 237
+    },
+    {
+      "index": 9,
+      "name": "GET /?q=<img src=x onerror=\"window.__qa_xss=1\">  (script in query string)",
+      "status": "passed",
+      "action": {
+        "ran": true,
+        "ok": true
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "route.document_served",
+          "target": "route:/?q=<img src=x onerror=\"window.__qa_xss=1\">",
+          "type": "http_error",
+          "name": "route.document_served [route:/?q=<img src=x onerror=\"window.__qa_xss=1\">]",
+          "phase": "action",
+          "passed": true,
+          "severity": "error",
+          "expected": "< 400",
+          "actual": 200,
+          "state": ""
+        },
+        {
+          "id": "route.catch_all_redirects_home",
+          "target": "route:/?q=<img src=x onerror=\"window.__qa_xss=1\">",
+          "type": "wrong_route",
+          "name": "route.catch_all_redirects_home [route:/?q=<img src=x onerror=\"window.__qa_xss=1\">]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "/",
+          "actual": "/",
+          "state": ""
+        },
+        {
+          "id": "route.app_not_blank",
+          "target": "route:/?q=<img src=x onerror=\"window.__qa_xss=1\">",
+          "type": "blank",
+          "name": "route.app_not_blank [route:/?q=<img src=x onerror=\"window.__qa_xss=1\">]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "non-empty #root",
+          "actual": {
+            "rootChildren": 1,
+            "bodyTextLength": 338
+          },
+          "state": ""
+        },
+        {
+          "id": "route.shell_rendered",
+          "target": "route:/?q=<img src=x onerror=\"window.__qa_xss=1\">",
+          "type": "missing",
+          "name": "route.shell_rendered [route:/?q=<img src=x onerror=\"window.__qa_xss=1\">]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "header present",
+          "actual": "no header",
+          "state": ""
+        },
+        {
+          "id": "route.device_list_rendered",
+          "target": "route:/?q=<img src=x onerror=\"window.__qa_xss=1\">",
+          "type": "blank",
+          "name": "route.device_list_rendered [route:/?q=<img src=x onerror=\"window.__qa_xss=1\">]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "device rows",
+          "actual": "none",
+          "state": ""
+        },
+        {
+          "id": "route.no_script_execution",
+          "target": "route:/?q=<img src=x onerror=\"window.__qa_xss=1\">",
+          "type": "script_executed",
+          "name": "route.no_script_execution [route:/?q=<img src=x onerror=\"window.__qa_xss=1\">]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no __qa_xss flag, no dialog",
+          "actual": {
+            "xssFlag": null,
+            "dialogs": []
+          },
+          "state": ""
+        },
+        {
+          "id": "route.no_reflection",
+          "target": "route:/?q=<img src=x onerror=\"window.__qa_xss=1\">",
+          "type": "reflected",
+          "name": "route.no_reflection [route:/?q=<img src=x onerror=\"window.__qa_xss=1\">]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "payload token absent from DOM",
+          "actual": "token present in DOM",
+          "state": ""
+        },
+        {
+          "id": "route.no_file_leak",
+          "target": "route:/?q=<img src=x onerror=\"window.__qa_xss=1\">",
+          "type": "leak",
+          "name": "route.no_file_leak [route:/?q=<img src=x onerror=\"window.__qa_xss=1\">]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no /etc/passwd content",
+          "actual": "passwd content in DOM",
+          "state": ""
+        }
+      ],
+      "duration_ms": 127
+    },
+    {
+      "index": 10,
+      "name": "Runtime health",
+      "status": "passed",
+      "action": {
+        "ran": false,
+        "ok": null
+      },
+      "verify": {
+        "ran": true,
+        "ok": true
+      },
+      "checks": [
+        {
+          "id": "runtime.no_uncaught_errors",
+          "target": "page",
+          "type": "uncaught_error",
+          "name": "runtime.no_uncaught_errors [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no uncaught exceptions",
+          "actual": [],
+          "state": ""
+        },
+        {
+          "id": "runtime.no_unexpected_dialogs",
+          "target": "page",
+          "type": "unexpected_dialog",
+          "name": "runtime.no_unexpected_dialogs [page]",
+          "phase": "verify",
+          "passed": true,
+          "severity": "error",
+          "expected": "no dialogs",
+          "actual": [],
+          "state": ""
+        }
+      ],
+      "duration_ms": 0
+    }
+  ],
+  "runtime": {
+    "page_errors": 0,
+    "console_errors": 0,
+    "dialogs": 0,
+    "failed_requests": 0
+  },
+  "evidence_dir": "D:\\ARYAN\\tireless_hand\\flytbase-ahc-swe-qa-hackathon\\qa\\evidence\\scenario-005",
+  "evidence": {
+    "final": "final.png",
+    "recording": "recording.webm",
+    "console": "console.json",
+    "ground_truth": "ground_truth.json",
+    "result": "result.json"
+  },
+  "evidence_integrity": {
+    "required": [
+      "console.json",
+      "ground_truth.json",
+      "result.json"
+    ],
+    "missing": []
+  },
+  "healing": {
+    "summary": {
+      "total_actions": 0,
+      "deterministic": 0,
+      "healed_actions": 0,
+      "memory_hits": 0,
+      "memory_stale": 0,
+      "local_recoveries": 0,
+      "llm_calls": 0,
+      "llm_successes": 0,
+      "llm_latency_ms_total": 0,
+      "llm_tokens_total": 0,
+      "unresolved": 0,
+      "rejected": 0,
+      "target_absent": 0,
+      "healing_failures": 0,
+      "status": "NOT_NEEDED"
+    },
+    "provider": "none",
+    "model": null,
+    "actions": []
+  }
+}
