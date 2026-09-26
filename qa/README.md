@@ -1,4 +1,4 @@
-# cockpit-qa — Level-1 deterministic QA engine
+# cockpit-qa — Level-1 deterministic QA engine (+ Level-2 performance)
 
 Black-box QA for the FlytBase cockpit. Drives the real app (cockpit `:4010`, backend `:4000`, live
 simulator) with Playwright and checks the UI against backend ground truth. Nothing is mocked and no
@@ -297,13 +297,16 @@ Scenario totals (`healing.summary`) and run totals (`summary.json` → `healing`
 qa/
   runner/      run.ts (CLI) · executor.ts (verdict engine) · findings.ts (fingerprints, incidents, diff)
                baseline.ts · version.ts · evidence.ts · fixture.ts · mutations.ts · selftest.ts · config.ts
-  scenarios/   types.ts (Scenario contract) · actions.ts (semantic action catalog) · s001..s006 · index.ts
+  scenarios/   types.ts (Scenario contract) · actions.ts (semantic action catalog) · s001..s006 · p001..p003 (Level-2) · index.ts
+  performance/ types.ts · config.ts · probe.ts · metrics.ts · invariants.ts · baseline.ts · stepper.ts · safety.ts
+               scenario.ts (perf scenario skeleton) · reporting.ts · selftest.ts
   healing/     session.ts (tier cascade) · candidates.ts · rank.ts · resolver.ts (LLM adapters) · memory.ts · types.ts
   assertions/  checks.ts (structured checks) · polling.ts · layout.ts (DOM geometry, hit-tests) · cockpit.ts
   utils/       api.ts (ground truth) · selectors.ts (only place selectors live) · actions.ts (user interactions)
   memory/      history.ts -> run-history.jsonl · healing-memory.json (learned, verified selector repairs)
-  baseline/    baseline.json (+ evidence/, gitignored)
-  evidence/    <scenario-id>/, summary.json, reliability.json, mutation-report.json, _mutations/, _reliability/
+  baseline/    baseline.json (+ evidence/, gitignored) · performance-baseline.json (Level-2 profile)
+  evidence/    <scenario-id>/, summary.json, reliability.json, mutation-report.json, _mutations/, _reliability/,
+               P001..P003/, performance-summary.{json,md}
 ```
 
 ## Evidence (per scenario, overwritten each run)
@@ -325,3 +328,202 @@ Responsive findings carry the following in `observed`:
 - the overlap area and overlap rectangle;
 - 3×3 hit-test coverage;
 - the result of a real Playwright trial click.
+
+---
+
+# Level-2 — performance testing
+
+**Question answered:** as real-time workload increases, when does the cockpit stop giving the operator a responsive and correct experience?
+
+Level-2 is an extension of the engine above, not a second framework. Performance scenarios are ordinary `Scenario`s run by the same executor, so they share verdicts, checks, findings, evidence, run history and the healing-aware semantic actions. They live in a separate list (`perfScenarios`). `npm run qa`, `--repeat`, `--mutation-check` and `--record-baseline` still run only the Level-1 suite.
+
+## Run
+
+```bash
+npm run qa -- --perf                          # P001 -> P002 -> P003, in that order
+npm run qa -- --perf --scenario P001          # one scenario ("P1", "p001", "P001,P003")
+npm run qa -- --perf --record-baseline        # record the N=4 performance profile -> baseline/performance-baseline.json
+npm run qa -- --perf --self-test              # offline self-test of the performance logic (no browser, no stack)
+npm run qa -- --perf --list
+```
+
+The perf logic self-test also runs inside `npm run qa -- --self-test`. Exit codes follow the executor: 0 PASS · 1 DEFECT_FOUND · 2 BLOCKED · 3 HARNESS_ERROR. The **performance verdict** is reported separately (see below).
+
+| scenario | workload axis | what happens |
+|---|---|---|
+| **P001** adaptive drone workload | fleet size N (≈ 9N telemetry msg/s) | K baseline windows at N=4, then N = 8, 12 … 32. At each level: fleet change → stabilize 4 s → observe 5 s → 3 selections alternating between the newest drone and the first → judge. The first failing level is bracketed and binary-refined to ±1 drone. |
+| **P002** telemetry + interaction stress | interaction interval 2.0 → 1.0 → 0.5 s | 6 drones, 3 of them flying. The operator alternates "select drone" and "2D/3D toggle", each measured to its postcondition. A video transition (stop → "off", start → "live" → decoded frames) is timed before stress and after every phase. |
+| **P003** stability soak | elapsed time (~150 s after warm-up) | 2 drones flying. Every 15 s: a 3 s window, a map interaction, heap (performance.memory + CDP post-GC), DOM size, rendered track size and errors, then trend analysis. |
+
+## Workload limits (hard, cannot be raised by env)
+
+| limit | value |
+|---|---|
+| drones | ≤ 32 |
+| simulation speed | ≤ 5x |
+| video streams started by a scenario | ≤ 3 (the backend's autostarted streams are not counted) |
+| spacing between operator interactions | ≥ 500 ms |
+| workload phase of a scenario | 180 s hard timeout. Page load before it and cleanup after it are not counted. The controller stops **gracefully** before the timeout and reports the result as truncated. |
+
+**Abort immediately** on any of these:
+
+| condition | how it is detected | outcome |
+|---|---|---|
+| Page freeze > 5 s | the page does not answer a probe call within 5 s, or a frame gap > 5 s | `HARD_INVARIANT_BREACH` + abort. The recovery time after cleanup is recorded. |
+| Repeated backend outages | 3 consecutive network / 502–504 | `BLOCKED` |
+| Simulator disconnect | `GET /api/health` | `BLOCKED` |
+| Renderer crash | Playwright `crash` event | functional defect |
+
+## Metrics (`performance/types.ts`, catalog in `performance/metrics.ts`)
+
+Every sample carries the workload context: scenario, axis, level, fleet size, sim speed, scenario video streams and phase. It also carries the wall-clock time, the time relative to the scenario start, and its window id.
+
+- **Browser** (in-page probe, installed with `addInitScript` before the cockpit loads):
+  - Long tasks (`PerformanceObserver longtask`): count, maximum, total blocking time (TBT) per window and per second.
+  - Long-animation-frame script attribution, when supported.
+  - Frame cadence from a `requestAnimationFrame` loop: mean FPS, 10th-percentile per-second FPS, frames > 33.3 ms, longest frame gap.
+  - Event Timing of clicks.
+  - JS heap: `performance.memory`, precise mode enabled at launch.
+  - DOM element count.
+  - Uncaught errors, unhandled rejections, `webglcontextlost`.
+  - CDP `Performance.getMetrics` (Chromium only): main-thread busy ratio and script busy ratio per window.
+  - Cesium scene render count and render time, from `preRender`/`postRender` listeners on the viewer. The viewer is found read-only through the React fiber, as in `assertions/cesium.ts`.
+- **Interaction latency** is measured in the page. The clock starts at the click event's timestamp and stops at the first animation frame in which the **intended postcondition** holds:
+  - selection: the row is selected AND the telemetry header names the drone;
+  - map: the button is pressed (`map_ack_ms`) and the camera is at the target pitch and at rest (`map_settle_ms`, which includes the 0.8 s camera flight).
+
+  A dispatched click without the postcondition is `POSTCONDITION_FAILED` and is never counted as a latency.
+- **Backend:** `/api/health` and `/api/control/state` round trips every second during a window. Failures are labelled `outage` (environment) or `http`.
+- **Simulator:** tick rate, speed and running state from ground truth.
+- **Product:**
+  - fleet convergence: API ack of the fleet change → every row rendered, timed in the page;
+  - telemetry freshness;
+  - video transition timings;
+  - "telemetry belongs to the selected drone": the displayed values must match a frame from that drone's own stream.
+- **Telemetry freshness is measured on the browser clock only:** now − arrival of the newest frame whose values are on screen. The simulator container's clock drifted by several hundred ms within seconds against the host (measured: `arrival − payload.timestamp` ranged from about −800 to +2000 ms). Cross-clock ages are therefore kept as `age_raw_ms` for diagnosis and never used for verdicts. That also means transit delay *before* the browser receives a frame is not measurable in this environment.
+
+Metrics a runtime cannot provide (no `performance.memory`, no CDP, map not observable, no Event Timing) are `null` with a reason in `unavailable_metrics`. They are never reported as 0 and never fail a scenario on their own.
+
+## Contracts (`performance/invariants.ts`, all configurable)
+
+| contract | metric | NOMINAL | ELEVATED | DEGRADED | BREACH |
+|---|---|---|---|---|---|
+| operator responsiveness | interaction latency (window median) | ≤ 150 ms | 150–300 ms | 300–1000 ms | > 1000 ms |
+| main-thread stalls | longest task | ≤ 150 ms | ≤ 300 ms | ≤ 500 ms | > 500 ms (severe) |
+| smoothness | mean FPS | ≥ 30 | ≥ 25 | ≥ 20 | < 20 |
+| freezes | longest frame gap | ≤ 100 ms | ≤ 250 ms | ≤ 500 ms | > 500 ms |
+| freshness | displayed telemetry age (window max) | ≤ 1000 ms | ≤ 2000 ms | ≤ 3000 ms | > 3000 ms |
+| convergence | fleet change → rows | ≤ 1000 ms | ≤ 1250 ms | ≤ 1500 ms | > 1500 ms |
+| stability | uncaught exceptions, WebGL context losses | 0 | — | — | ≥ 1 |
+| memory (P003) | post-saturation heap slope | judged only after the track history reaches its cap; otherwise UNAVAILABLE ||||
+
+The 150–300 ms gap is its own category (ELEVATED), not hidden. Thresholds can be overridden with `QA_PERF_INVARIANTS='{"responsiveness.interaction":{"breach":800}}'`.
+
+**Step verdict:**
+
+- `HARD_INVARIANT_BREACH` if a hard contract is breached;
+- `DEGRADED` if a contract is DEGRADED or there is a baseline-relative regression;
+- `HEALTHY` otherwise;
+- `INCONCLUSIVE` if the responsiveness and smoothness metrics are all unavailable.
+
+Two rules make the verdict robust:
+
+- **Isolated outlier vs sustained:** a first window that is not clearly healthy is re-observed. A verdict requires both consecutive windows to agree; the single bad window is listed as an isolated outlier. Stability contracts (exceptions, WebGL) count any single occurrence.
+- **Pre-existing violations:** a contract the baseline workload itself already violates is reported under "Contracts already violated at the baseline workload". At higher load it counts only if it gets worse.
+
+## Baseline methodology (`performance/baseline.ts`)
+
+- Baseline workload: **N=4, 1.0x, no faults**. After a discarded 5 s warm-up, **K=5 windows** of 5 s are collected (`QA_PERF_BASELINE_WINDOWS`).
+- Per metric, the profile stores n, median, mean, min, max, P5, P95, Q1, Q3 and **IQR**. When lower is worse (FPS), the limits mirror at P5 and are clamped at 0.
+
+| class | rule |
+|---|---|
+| `NORMAL_VARIANCE` | ≤ P95 + 1.5·IQR |
+| `OUTLIER` | beyond that, but not in 2 consecutive windows |
+| `PERFORMANCE_REGRESSION` | > P95 + 3.0·IQR in **2 consecutive** windows |
+| `INSUFFICIENT_BASELINE` | fewer than 3 baseline values: not judged, never a regression |
+
+- Each metric has an absolute floor, so a zero-IQR baseline (e.g. 0 long tasks in every window) cannot turn one sample of noise into a regression.
+- Only user-facing metrics are judged relatively: interaction latency, longest task, TBT/s, FPS, longest frame gap, API RTT and telemetry age. Metrics that scale with load by design (message rate, heap, DOM size, busy ratio) are diagnostics for correlation.
+- The constants live in `perfConfig.tukey`.
+- Regression detection uses the **in-run** baseline: same browser, same stack, minutes apart. `baseline/performance-baseline.json` (written by `--perf --record-baseline`, a separate file, so the Level-1 `baseline.json` schema is untouched) is compared as cross-run drift in `recorded_baseline_drift`.
+
+## Adaptive ramp (`performance/stepper.ts`: `stabilize()`, `observe()`, `evaluateInvariants()`, `bracketKnee()`)
+
+```
+4 PASS → 8 PASS → 12 PASS → 16 FAIL        bracket [12, 16]
+refine: 14 PASS → 15 FAIL                  boundary [14, 15]: safe capacity 14, onset 15
+```
+
+`bracketKnee` is pure orchestration with an injected evaluator, which is how it is unit-tested. It never claims a boundary it did not establish:
+
+- **all levels pass** → "no degradation up to 32", with no onset claimed;
+- **the first level fails** → no safe capacity claimed;
+- **the time budget runs out** → truncated, bracket reported as unrefined;
+- **inconclusive level** → the search stops;
+- **severe abort during level L** → onset L, with the bracket from the last passing level, not refined.
+
+Results where a level passes above a failing one are reported as `non_monotonic`.
+
+## Bottleneck correlation (`performance/reporting.ts`)
+
+At the onset level, signals are compared with the baseline:
+
+| signals | consistent with |
+|---|---|
+| high API RTT + normal main thread | backend |
+| normal API + high long tasks / blocking time / busy ratio | frontend main thread (with long-animation-frame script attribution) |
+| high telemetry age + socket instability | transport / realtime |
+| low FPS + normal API + higher Cesium render time | map rendering |
+| falling tick rate | simulator |
+
+Every statement reads "signals consistent with …". Correlation is never reported as a root cause.
+
+## Performance verdict
+
+| verdict | meaning |
+|---|---|
+| `HEALTHY` | every judged level healthy. Contracts that could not be measured anywhere are named ("NOT measurable: …"). |
+| `DEGRADED` / `HARD_INVARIANT_BREACH` | the worst sustained level, with where it happened and why |
+| `INCONCLUSIVE` | nothing could be judged |
+| `BLOCKED` / `HARNESS_ERROR` | outage / harness failure; these always win over measurements. **A harness error never becomes a performance defect.** |
+
+Executor status vs performance verdict:
+
+- **Functional failures under load are defects (DEFECT_FOUND), exactly as in Level-1:** wrong device rows, telemetry from another drone, an interaction that never takes effect, uncaught exceptions, WebGL context loss, renderer crash.
+- **Capacity results are the performance verdict** in `performance.json`, plus verdict-neutral `perf.contract` warnings. Pushing the system until it degrades is the ramp's purpose, not a defect by itself.
+
+## Evidence (`evidence/<P00x>/`)
+
+| file | content |
+|---|---|
+| `recording.webm`, `console.json`, `ground_truth.json`, `result.json` | as in Level-1 (same executor) |
+| `performance.json` | baseline profile, recorded-baseline drift, every workload step with its windows (raw browser/CDP/API/telemetry/simulator metrics and interactions), invariant results, baseline comparisons, all samples with timestamps and workload, knee/boundary, verdict, bottleneck signals, unavailable metrics, safety events, cleanup report, scenario details |
+| `summary.md` | scenario · workload axis · baseline · measurements table · safe capacity · degradation onset · primary signals · verdict · evidence path |
+| `degradation-annotated.png` | the cockpit at the first failing level, with a banner (workload, verdict, key metrics) and the device list / map outlined. The banner is composed in a separate page, so it is produced even when the cockpit page is frozen (via a CDP screenshot). |
+| `dom.html` | the DOM under load |
+
+A run also writes `evidence/performance-summary.{json,md}`.
+
+## Safety and cleanup
+
+Every change goes through a `WorkloadLedger`, and cleanup runs as an `always` step, whatever happened before. Cleanup:
+
+1. stops video started by the scenario and restores video it stopped;
+2. removes the drones it added;
+3. sets speed to 1x;
+4. resets and restarts the simulator;
+5. **verifies** the stack is back at its starting fleet, 1x, running, all drones in standby.
+
+Preconditions: a perf scenario starts only from the baseline stack (the stock 4 drones, no faults); otherwise it is BLOCKED. On Ctrl-C the CLI undoes any open ledger. A cleanup failure is `HARNESS_ERROR`, or `BLOCKED` if the backend was unreachable, and lists the leftovers. It is never a performance result.
+
+## Limitations
+
+- **Headless Chromium renders WebGL through SwiftShader (CPU).** The renderer string is recorded in `performance.json`. Cesium frame cost, FPS and the recurring ~300 ms Cesium frames seen at N=4 depend on this software renderer, and the absolute numbers do not represent a GPU operator workstation. Relative results (the knee, regressions against the in-run baseline) are the meaningful part.
+- The Playwright video recording (required evidence) adds its own load to every level equally.
+- Probe `page.evaluate` calls add small main-thread tasks (about 1 per second).
+- **Cross-clock transit** (simulator → browser) is not measurable, because the simulator container's clock drifts against the host. Freshness is the browser-side age of what is on screen.
+- **The P003 heap contract is post-saturation.** The track cap is 2000 points per drone at 2 points/s (≈ 1000 s), beyond the 180 s safety limit, so in a default run it is UNAVAILABLE with a projected saturation time. The pre-saturation slope is reported but not judged.
+- **The P001 boundary depends on how long the session has run.** From reading the code (not measured in isolation): `CesiumMap.tsx` runs `syncEntities` on every store update, and that rebuilds each drone's full track polyline. So the work per telemetry message should grow with fleet size × track length. That is why the `track pts` column is reported next to each level; the boundary is a property of the session, not a constant.
+- The backend autostarts video only for boot-time drones, so P002 times video on one of those drones.
+- Event Timing and long-animation-frame APIs are Chromium features; elsewhere they are reported as unavailable.

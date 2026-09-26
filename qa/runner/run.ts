@@ -2,7 +2,13 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Browser } from 'playwright';
 import { remember } from '../memory/history.js';
-import { scenarios } from '../scenarios/index.js';
+import { perfScenarios, scenarios } from '../scenarios/index.js';
+import { perfConfig } from '../performance/config.js';
+import { perfResults } from '../performance/scenario.js';
+import { writeRunSummary } from '../performance/reporting.js';
+import { perfSelfTest } from '../performance/selftest.js';
+import { activeLedgers } from '../performance/safety.js';
+import type { PerformanceRun } from '../performance/types.js';
 import type { Scenario } from '../scenarios/types.js';
 import { baselineDrift, baselineFile, baselineIndex, loadBaseline, writeBaseline, type Baseline } from './baseline.js';
 import { qaConfig, type QaConfig } from './config.js';
@@ -34,6 +40,12 @@ import { EL, selectorAudit, type Strategy } from '../utils/selectors.js';
  *   npm run qa -- --selector-audit                every registry selector: strategy + live match count
  *   npm run qa -- --list | --list-mutations | --headed | --no-baseline
  *
+ * Level-2 performance (separate scenario set, never part of the runs above):
+ *   npm run qa -- --perf                          P001 -> P002 -> P003
+ *   npm run qa -- --perf --scenario P001          one ("P1", "p001", "P001,P003")
+ *   npm run qa -- --perf --record-baseline        record the N=4 performance baseline profile only
+ *   npm run qa -- --perf --self-test              offline self-test of the performance logic (no browser)
+ *
  * Exit codes (worst verdict wins): 0 PASS · 1 DEFECT_FOUND · 2 BLOCKED · 3 HARNESS_ERROR
  */
 
@@ -54,10 +66,11 @@ interface Args {
   selectorAudit: boolean;
   healingDemo: boolean;
   resetHealingMemory: boolean;
+  perf: boolean;
 }
 
 function parseArgs(argv: string[]): Args {
-  const out: Args = { failOn: 'any', runs: 3, repeat: 0, list: false, listMutations: false, mutationCheck: false, recordBaseline: false, noBaseline: false, headed: false, selfTest: false, selectorAudit: false, healingDemo: false, resetHealingMemory: false };
+  const out: Args = { failOn: 'any', runs: 3, repeat: 0, list: false, listMutations: false, mutationCheck: false, recordBaseline: false, noBaseline: false, headed: false, selfTest: false, selectorAudit: false, healingDemo: false, resetHealingMemory: false, perf: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     const [flag, inline] = a.includes('=') ? [a.slice(0, a.indexOf('=')), a.slice(a.indexOf('=') + 1)] : [a, undefined];
@@ -78,6 +91,7 @@ function parseArgs(argv: string[]): Args {
     else if (flag === '--selector-audit') out.selectorAudit = true;
     else if (flag === '--healing-demo') out.healingDemo = true;
     else if (flag === '--reset-healing-memory') out.resetHealingMemory = true;
+    else if (flag === '--perf') out.perf = true;
     else throw new Error(`unknown argument ${a}`);
   }
   return out;
@@ -85,6 +99,8 @@ function parseArgs(argv: string[]): Args {
 
 function normalizeId(raw: string): string {
   const n = raw.trim().replace(/^scenario-/, '');
+  const perf = /^p(\d+)$/i.exec(n);
+  if (perf) return `P${perf[1].padStart(3, '0')}`;
   return /^\d+$/.test(n) ? `scenario-${n.padStart(3, '0')}` : raw.trim();
 }
 
@@ -461,6 +477,49 @@ async function healingDemo(browser: Browser, base: QaConfig, runId: string): Pro
   return 0;
 }
 
+/**
+ * Level-2: performance scenarios through the same executor (verdicts, evidence, history), then the
+ * performance verdict/boundary per scenario and evidence/performance-summary.{json,md}.
+ */
+async function perfRun(browser: Browser, base: QaConfig, args: Args, runId: string): Promise<number> {
+  const chosen = select(perfScenarios, args);
+  if (chosen.length === 0) throw new Error('no performance scenarios selected (P001, P002, P003)');
+  if (args.recordBaseline) {
+    perfConfig.mode.recordBaselineOnly = true;
+    if (!chosen.some((s) => s.id === 'P001')) throw new Error('--record-baseline with --perf records the P001 (N=4) profile');
+  }
+  const run = args.recordBaseline ? chosen.filter((s) => s.id === 'P001') : chosen;
+  console.log(`Level-2 performance: ${run.map((s) => s.id).join(' -> ')}${args.recordBaseline ? '  (baseline profile only)' : ''}`);
+  console.log(`  limits: <=${perfConfig.safety.maxDrones} drones, <=${perfConfig.safety.maxSimSpeed}x, <=${perfConfig.safety.maxScenarioVideoStreams} scenario video streams, >=${perfConfig.safety.minInteractionIntervalMs} ms between interactions, ${perfConfig.safety.scenarioTimeoutMs / 1000}s workload timeout\n`);
+  const startedAt = new Date().toISOString();
+  const results = await runSet(browser, run, base, runId, 'performance', {});
+  const perf: PerformanceRun = {
+    schema: 'cockpit-qa/performance-run@1',
+    run_id: runId,
+    started_at: startedAt,
+    finished_at: new Date().toISOString(),
+    scenarios: results.map((r) => {
+      const p = perfResults.get(r.scenario.id);
+      return { id: r.scenario.id, status: r.status, verdict: p?.verdict ?? (r.status === 'BLOCKED' ? 'BLOCKED' : 'HARNESS_ERROR'), safe_capacity: p?.knee?.safe_capacity ?? null, degradation_onset: p?.knee?.degradation_onset ?? null, evidence_dir: r.evidence_dir };
+    }),
+  };
+  console.log('\nPerformance');
+  for (const r of results) {
+    const p = perfResults.get(r.scenario.id);
+    if (!p) {
+      console.log(`  ${pad(r.scenario.id, 6)} no performance result (${r.status}: ${r.status_reason})`);
+      continue;
+    }
+    console.log(`  ${pad(r.scenario.id, 6)} ${pad(p.verdict, 22)} ${p.verdict_reason.slice(0, 160)}`);
+    if (p.knee) console.log(`         safe capacity ${p.knee.safe_capacity ?? 'none'} · degradation onset ${p.knee.degradation_onset ?? 'not observed'} · ${p.knee.reason}`);
+    for (const sig of p.bottleneck_signals) console.log(`         signal (${sig.strength}): ${sig.statement.slice(0, 220)}`);
+    if (p.cleanup) console.log(`         cleanup ${p.cleanup.ok ? 'ok' : 'INCOMPLETE'} · back at baseline: ${p.cleanup.verified_baseline}`);
+    console.log(`         ${join(r.evidence_dir, 'summary.md')}`);
+  }
+  console.log(`\n-> ${writeRunSummary(base.paths.evidence, perf, [...perfResults.values()])}`);
+  return EXIT[worst(results)];
+}
+
 // ---------------------------------------------------------------------------------------------- main
 
 async function main(): Promise<number> {
@@ -474,6 +533,8 @@ async function main(): Promise<number> {
     return 0;
   }
 
+  if (args.perf && args.selfTest) return perfSelfTest();
+
   const resolver = resolverFromEnv();
   const base: QaConfig = { ...qaConfig, headless: args.headed ? false : qaConfig.headless, resolver };
   if (args.resetHealingMemory) rmSync(base.paths.healingMemory, { force: true });
@@ -485,8 +546,16 @@ async function main(): Promise<number> {
   // Provider and model only — never the key.
   console.log(`  healing: tier-3 resolver ${resolver.provider}${resolver.model ? ` (${resolver.model})` : ''}${resolver.provider !== 'none' ? (resolver.configured ? ' — key present' : ' — NO KEY, tier 3 disabled') : ' — deterministic tiers only'} · memory ${base.paths.healingMemory}\n`);
 
-  const browser = await launchBrowser(base);
+  // Perf runs: precise performance.memory (otherwise Chromium quantizes/caches it).
+  const browser = await launchBrowser(base, args.perf ? ['--enable-precise-memory-info'] : []);
+  const onSigint = async () => {
+    console.error('\ninterrupted: restoring the shared stack');
+    for (const l of activeLedgers) await l.cleanup().catch(() => undefined);
+    process.exit(130);
+  };
+  process.once('SIGINT', onSigint);
   try {
+    if (args.perf) return await perfRun(browser, base, args, runId);
     if (args.selfTest) return await selfTest(browser, withEvidenceDir(base, '_selftest'));
     if (args.selectorAudit) return await runSelectorAudit(browser, base);
     if (args.recordBaseline) return (await recordBaseline(browser, base, args.runs, runId)).code;

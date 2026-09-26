@@ -121,4 +121,38 @@ export class ApiClient {
   clearFaults() {
     return this.json<{ faults: unknown[] }>('DELETE', '/api/control/fault');
   }
+
+  // ---- Level-2 workload control (same error model: outages throw Blocked, other failures throw Error)
+
+  addDrone(req: { name?: string; latitude?: number; longitude?: number } = {}): Promise<{ drone: DeviceInfo; dock: DeviceInfo }> {
+    return this.json('POST', '/api/control/drones', req);
+  }
+
+  removeDrone(id: string): Promise<{ ok: boolean }> {
+    return this.json('DELETE', `/api/control/drones/${encodeURIComponent(id)}`);
+  }
+
+  /** The simulator applies `speed` with any sim action; `start` keeps the world running. */
+  setSimulationSpeed(speed: number, action: 'start' | 'stop' | 'reset' = 'start'): Promise<SimSnapshot> {
+    return this.json('POST', '/api/control/sim', { action, speed });
+  }
+
+  videoControl(action: 'start' | 'stop', deviceId?: string): Promise<{ ok: boolean; devices: Array<{ id: string; enabled: boolean }> }> {
+    return this.json('POST', '/api/control/video', deviceId ? { action, deviceId } : { action });
+  }
+
+  /**
+   * Round-trip probe that never throws: outages (network, 502-504) are labelled `outage` so a
+   * performance run can tell an unavailable service apart from a slow or failing product.
+   */
+  async timed(path: string): Promise<{ ok: boolean; status: number | null; rtt_ms: number; failure: 'none' | 'outage' | 'http'; error?: string }> {
+    const t0 = performance.now();
+    try {
+      const r = await this.request('GET', path);
+      const rtt = Math.round((performance.now() - t0) * 10) / 10;
+      return r.ok ? { ok: true, status: r.status, rtt_ms: rtt, failure: 'none' } : { ok: false, status: r.status, rtt_ms: rtt, failure: 'http', error: `HTTP ${r.status}` };
+    } catch (e) {
+      return { ok: false, status: null, rtt_ms: Math.round(performance.now() - t0), failure: e instanceof Blocked ? 'outage' : 'http', error: (e as Error).message };
+    }
+  }
 }

@@ -7,6 +7,7 @@ import { healingCases } from '../healing/selftest-cases.js';
 import { baselineStateOf } from './baseline.js';
 import { runScenario, type ScenarioStatus } from './executor.js';
 import { diffAgainstBaseline } from './findings.js';
+import { perfSelfTestCases } from '../performance/selftest.js';
 
 /**
  * Self-test of the verdict model: synthetic scenarios against the live cockpit, each constructed to
@@ -102,6 +103,11 @@ export async function selfTest(browser: Browser, base: QaConfig): Promise<number
   for (const c of logicCases()) {
     ok &&= c.ok;
     console.log(`${c.ok ? 'OK  ' : 'FAIL'} ${c.name}  (${c.detail})`);
+  }
+  console.log('\n-- performance logic (Level-2, offline)');
+  for (const c of await perfSelfTestCases()) {
+    ok &&= c.ok;
+    console.log(`${c.ok ? 'OK  ' : 'FAIL'} ${c.name}${c.ok ? '' : `  (${c.detail.slice(0, 200)})`}`);
   }
   console.log('\n-- self-healing (synthetic page, scripted resolver test double; no network)');
   for (const c of await healingCases(browser, join(base.paths.evidence, 'healing-memory.json'))) {

@@ -31,7 +31,7 @@ function hashSources(qaRoot: string): string {
       else if (p.endsWith('.ts')) h.update(relative(qaRoot, p).replace(/\\/g, '/')).update(readFileSync(p));
     }
   };
-  for (const d of ['scenarios', 'assertions', 'runner', 'utils', 'healing']) walk(join(qaRoot, d));
+  for (const d of ['scenarios', 'assertions', 'runner', 'utils', 'healing', 'performance']) walk(join(qaRoot, d));
   return h.digest('hex').slice(0, 12);
 }
 

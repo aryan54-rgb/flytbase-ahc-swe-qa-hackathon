@@ -9,12 +9,12 @@ import type { EvidenceRecorder } from './evidence.js';
  * Browser fixture: one browser per run, one fresh context (clean storage, own video) per scenario.
  */
 
-export async function launchBrowser(config: QaConfig): Promise<Browser> {
+export async function launchBrowser(config: QaConfig, extraArgs: string[] = []): Promise<Browser> {
   return chromium.launch({
     headless: config.headless,
     slowMo: config.slowMo || undefined,
     // Cesium needs WebGL; headless Chromium provides it through SwiftShader.
-    args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'],
+    args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', ...extraArgs],
   });
 }
 

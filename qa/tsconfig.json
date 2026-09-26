@@ -11,5 +11,5 @@
     "lib": ["ES2022", "DOM"],
     "types": ["node"]
   },
-  "include": ["runner", "scenarios", "assertions", "utils", "memory", "healing"]
+  "include": ["runner", "scenarios", "assertions", "utils", "memory", "healing", "performance"]
 }
